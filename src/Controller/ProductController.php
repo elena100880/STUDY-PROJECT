@@ -9,23 +9,17 @@ class ProductController extends AbstractController
 {
     public function index()
     {
-        // ...
-
-        // the `render()` method returns a `Response` object with the
-        // contents created by the template
-      //  return $this->render('product/index.html.twig', [
-       //     'category' => '...',
-        //    'promotions' => ['...', '...'],
-       // ]);
-
-        // the `renderView()` method only returns the contents created by the
-        // template, so you can use those contents later in a `Response` object
+        
+        $a=32;
+       
         $contents = $this->renderView('product/index.html.twig',
        
-        [
-            'random_strings' => ['ala', 'ma','kot', 'pies']
-        ]
+            [
+                'random_strings' => ['ala', 'ma','kot', 'pies'],
+                'www'=>$a
+            ],
 
+        
         );
 
         return new Response($contents);
