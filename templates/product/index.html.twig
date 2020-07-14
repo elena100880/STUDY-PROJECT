@@ -8,6 +8,18 @@
     <body>
 
         <h1>hallooooo!!!</h1>
+           
+        {% for string in random_strings %}
+           
+            {{string}} <br>
+       
+        {% endfor %}
+
+
+
+
+
+
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>
