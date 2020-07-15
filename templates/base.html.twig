@@ -2,11 +2,55 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <title>{% block title %}Symfony shop{% endblock %}</title>
+        <base href="/">
+        {% block stylesheets %}
+            <link rel="stylesheet" href="/css/base.css">
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&amp;subset=latin-ext" >
+        {% endblock %}
+
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block body %}
+
+            <div class="header">
+                {% block header %}
+                    
+                    <h1 class="logo">{% block logo %}Интернет-магазин{% endblock %}</h1>
+                    <div class="topnav">
+                            <ul class="menu">
+                                <li><a href="#">Strona główna</a></li>
+                                <li><a href="#">Pierwszy raz tutaj?</a></li>
+                                <li><a href="#">Dla czego filozofia?</a></li>
+                                <li><a href="#">O autorze</a></li>
+                                <li><a href="#">Kontakt</a></li>			
+                            </ul>
+                    </div>
+
+                {% endblock %}
+            </div>
+
+            <div class="content">
+                {% block content %}           
+
+                {% endblock %}
+            </div>
+
+            <div class="footer">
+                {% block footer %}
+                    
+                    <div class="contact">
+                            <h1>Kontakt z autorem</h1>
+                            <a href="#" class="bluebutton">Nawiązanie współpracy</a>
+                    </div>
+
+                    <div class="info">
+                        Wszelkie prawa zastrzeżone &copy; 2017 Dziękuję za wizytę!
+                    </div>
+
+                {% endblock %}
+            </div>
+
+        {% endblock %}
     </body>
 </html>

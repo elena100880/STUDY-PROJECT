@@ -1,23 +1,13 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Welcome!</title>
-    </head>
-    <body>
-        
-        <a href="{{ path('app_lucky_number') }}">Homepage</a>
+{% extends 'base.html.twig' %}   
 
-        <h1>hallooooo!!!</h1>
+{% block content %}           
 
-
+    <a href="{{ path('app_lucky_number') }}">Homepage</a>
+    <br><br>
+    <h1>hallooooo!!!</h1>
            
-        {% for string in random_strings %}
-           
-            {{string}} <br>
-       
-        {% endfor %}
+    {% for string in random_strings %}
+        {{string}} <br>
+    {% endfor %}
 
-      
-    </body>
-</html>
+{% endblock %}

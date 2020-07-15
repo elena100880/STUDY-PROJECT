@@ -1,14 +1,8 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>LuckyNumber</title>
-    </head>
-    <body>
-        <a href="{{ path('app_prod') }}">Welcome</a><br>
-        Lucky number: {{number}}  
-       
-       
+{% extends 'base.html.twig' %}   
 
-    </body>
-</html>
+{% block content %}           
+
+    <a href="{{ path('app_prod') }}">Welcome</a><br>
+    Lucky number: {{number}}  
+
+{% endblock %}
