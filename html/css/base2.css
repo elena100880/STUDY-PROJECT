@@ -45,6 +45,8 @@ h1.logo {
 	width: 950px;
 	text-align: center;
 	padding: 0;
+	background-color: gainsboro;
+	color: purple;
 }
 
 .contact {
@@ -72,4 +74,3 @@ h1.logo {
 	text-align: center;
 	padding: 20px;
 }
-

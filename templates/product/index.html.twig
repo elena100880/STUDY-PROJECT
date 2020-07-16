@@ -4,10 +4,12 @@
 
     <a href="{{ path('app_lucky_number') }}">Homepage</a>
     <br><br>
-    <h1>hallooooo!!!</h1>
+    <h1>halloo</h1>
+
+    <h1>{{r_str.odin}}</h1>
            
-    {% for string in random_strings %}
-        {{string}} <br>
+    {% for key, string in r_str| slice (0,3) %}
+        {{key}}: {{string}} <br>
     {% endfor %}
 
 {% endblock %}

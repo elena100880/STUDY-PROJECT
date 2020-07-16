@@ -15,7 +15,7 @@ class ProductController extends AbstractController
         $contents = $this->renderView('product/index.html.twig',
        
             [
-                'random_strings' => ['ala', 'ma','kot', 'pies'],
+                'r_str' => ['odin'=>'ala', 'dwa'=>'ma', 'tree'=>'kot', 'four'=>'pies'],
                 'www'=>$a
             ],
 
