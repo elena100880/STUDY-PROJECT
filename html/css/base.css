@@ -1,0 +1,78 @@
+body {	
+	background-color: #2F3336;
+	color: #efefef;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 17px;
+}
+h1.logo {
+	font-size: 44px;
+	font-weight: 700;
+	color: #ddd;
+	text-align: center;
+	letter-spacing: 5px;
+	margin-top: 50px;
+	margin-bottom: 40px;
+}
+.topnav {
+	background: #1c74b2;
+	text-align: center;
+}
+.menu {
+	list-style: none;
+	margin: 0;
+	padding: 10px;
+	font-size: 18px;
+	min-height: 38px;
+	line-height: 200%;
+}
+.menu > li {
+	display: inline-block;
+	padding: 0 20px;
+	border-right: 1px dashed #0a2b42;
+}
+.menu > li:first-child {
+	border-left: 1px dashed #0a2b42;
+}
+.menu a {
+	text-decoration: none;
+	color: #fff; 
+}
+.menu a:hover {
+	color: #0a2b42; 
+}
+.content {
+	margin: auto;
+	width: 950px;
+	text-align: center;
+	padding: 0;
+	background-color: gainsboro;
+	color: purple;
+	margin-top: 50px;
+}
+
+.contact {
+	margin: auto;
+	width: 950px;
+	text-align: center;
+	padding-bottom: 10px;
+	margin-bottom: 10px;
+	margin-top: 50px;
+}
+.bluebutton {
+	background-color: #1c74b2;
+	padding: 15px;
+	color: #efefef;
+	font-size: 15px;
+	text-decoration: none;
+	border-radius: 5px;
+	min-width: 300px;
+}
+.bluebutton:hover {
+	background-color: #196499;
+}
+.info {
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	padding: 5px;
+}
