@@ -8,3 +8,7 @@ app_lucky_number:
 app_prod:
         path: /prod
         controller: App\Controller\ProductController::index
+
+registration:
+            path: /registration
+            controller: App\Controller\RegistController::registration
