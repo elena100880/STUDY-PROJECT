@@ -3,11 +3,16 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Symfony shop{% endblock %}</title>
-        <base href="/">
+       <!-- <base href="/">  -->
         {% block stylesheets %}
-            <link rel="stylesheet" href="css/base2.css">
+            <link rel="stylesheet" href="/css/base1.css">
             <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&amp;subset=latin-ext" >
         {% endblock %}
+
+        {% block stylesheets1 %}
+            
+        {% endblock %}
+
 
     </head>
     <body>
@@ -40,12 +45,12 @@
                 {% block footer %}
                     
                     <div class="contact">
-                            <h1>Kontakt z autorem</h1>
+                            <h3>Kontakt z autorem</h3>
                             <a href="#" class="bluebutton">Nawiązanie współpracy</a>
                     </div>
 
                     <div class="info">
-                        Wszelkie prawa zastrzeżone &copy; 2017 Dziękuję za wizytę!
+                         Dziękuję za wizytę!
                     </div>
 
                 {% endblock %}

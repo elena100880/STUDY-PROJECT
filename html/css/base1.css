@@ -46,7 +46,8 @@ h1.logo {
 	text-align: center;
 	padding: 0;
 	background-color: gainsboro;
-	color: purple;
+	color: black;
+	margin-top: 50px;
 }
 
 .contact {
@@ -55,12 +56,13 @@ h1.logo {
 	text-align: center;
 	padding-bottom: 10px;
 	margin-bottom: 10px;
+	margin-top: 50px;
 }
 .bluebutton {
 	background-color: #1c74b2;
-	padding: 15px;
+	padding: 5px;
 	color: #efefef;
-	font-size: 19px;
+	font-size: 15px;
 	text-decoration: none;
 	border-radius: 5px;
 	min-width: 300px;
@@ -72,5 +74,5 @@ h1.logo {
 	margin-left: auto;
 	margin-right: auto;
 	text-align: center;
-	padding: 20px;
+	padding: 5px;
 }
