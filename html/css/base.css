@@ -43,7 +43,7 @@ h1.logo {
 .content {
 	margin: auto;
 	width: 950px;
-	text-align: center;
+	text-align: left;
 	padding: 0;
 	background-color: gainsboro;
 	color: black;

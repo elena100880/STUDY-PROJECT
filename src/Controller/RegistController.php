@@ -16,13 +16,21 @@ class RegistController extends AbstractController
     public function registration (Request $request)
     {
         //формирует конфиг внутри себя по переданным тобой вещам и возвращает форму
-        $defaultData = [];
+        $defaultData = array ();
         $form = $this->createFormBuilder($defaultData)
-            ->add('Enter_your_email', EmailType::class)
-            ->add('Enter_your_password', PasswordType::class)
-            ->add('Repeat_password', PasswordType::class)
+            
+            ->add('Enter_your_email:', EmailType::class, array (
+                'required'=>false,
+                'attr'=> array ('class'=>'kot',
+                    'placeholder'=>'почта',
+                    'onfocus'=>'this.placeholder=""',
+                    'onblur'=>'this.placeholder="почта"',
+                ),
+                ))
+            ->add('Enter_your_password:', PasswordType::class)
+            ->add('Repeat_password:', PasswordType::class)
             ->add('SEND', SubmitType::class)
-            ->add('RESET', ResetType::class)
+            ->add('RESET', SubmitType::class)
             ->getForm();
 
         $form->handleRequest($request);
@@ -31,7 +39,7 @@ class RegistController extends AbstractController
             
             $data = $form->getData();
 
-            if ($data['Enter_your_password']!=$data['Repeat_password']) {
+            if ($data['Enter_your_password:']!=$data['Repeat_password:']) {
                 $message='Enter equal passwords';      
                 $contents = $this->renderView('registration/index.html.twig',
                     [

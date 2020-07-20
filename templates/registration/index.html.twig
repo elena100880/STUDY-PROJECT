@@ -1,12 +1,16 @@
 {% extends 'base.html.twig' %}   
 
+{% block stylesheets1 %}
+            <link rel="stylesheet" href="/css/reg.css">
+           
+{% endblock %}
 
 {% block content %}           
 
     {{form(form)}}
    
     <br>
-    <div>
+    <div id="message">
         {{message}}
     </div>
     
