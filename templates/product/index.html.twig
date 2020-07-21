@@ -1,27 +1,15 @@
 {% extends 'base.html.twig' %}   
 
 {% block stylesheets1 %}
-    <style>
-        .content {
-            color: red;
-        }
-    </style>
-            
+            <link rel="stylesheet" href="/css/prod.css">
+           
 {% endblock %}
 
 
 
 
-{% block content %}           
+{% block content %}  
 
-    <a href="{{ path('app_lucky_number') }}">Homepage</a>
-    <br><br>
-    <h1>halloowerty</h1>
-
-    <h1>{{r_str.odin}}</h1>
-           
-    {% for key, string in r_str| slice (0,3) %}
-        {{key}}: {{string}} <br>
-    {% endfor %}
-
+{{product.id}}. {{product.name}} - {{product.price}}$ ({{product.description}})
+    
 {% endblock %}

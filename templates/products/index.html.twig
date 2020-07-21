@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}   
+
+{% block stylesheets1 %}
+            <link rel="stylesheet" href="/css/prods.css">
+           
+{% endblock %}
+
+{% block content %}           
+
+
+
+   
+        <table>
+            <tr>
+                <td>Name</td><td>Price</td><td>Link to item</td>
+            </tr>
+    {% for item in products %}       
+            <tr>
+                <td> {{item.name}} </td><td> {{item.price}} </td> <td><a href="{{ path('product', {id: item.id}) }}">go to item</a></td>
+            </tr>
+    {% endfor %}        
+        </table>    
+          
+    
+            
+
+{% endblock %}

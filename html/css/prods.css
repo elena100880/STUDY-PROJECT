@@ -1,0 +1,16 @@
+.content {
+	width: 700px;
+	padding-left: 250px;
+	padding-top: 6px;
+	padding-bottom: 10px;
+	text-align: left;
+}
+table {
+	margin-bottom: 10px;
+	border-collapse: collapse;
+}
+td, th {
+	border: 1px solid green;
+	border-collapse: collapse;
+	padding: 5px;
+}
