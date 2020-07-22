@@ -1,21 +1,35 @@
 {% extends 'base.html.twig' %}   
 
 {% block stylesheets1 %}
-            <link rel="stylesheet" href="/css/prods.css">
+            <link rel="stylesheet" href="/css/prods1.css">
            
 {% endblock %}
 
 {% block content %}           
-  
-        <table>
-            <tr>
-                <td>Name</td><td>Price</td><td>Link to item</td>
-            </tr>
-    {% for item in products %}       
-            <tr>
-                <td> {{item.name}} </td><td> {{item.price}} </td> <td><a href="{{ path('product', {id: item.id}) }}">go to item</a></td>
-            </tr>
-    {% endfor %}        
-        </table>    
+
+    {{form(form)}}
+
+    {% if products is defined %}
+        
+        {% if  not products %}
+            NO MATCHING!!
+        {% else %}  
+            
+            <table>
+                <tr>
+                    <td>Name</td><td>Price</td><td>Link to item</td>
+                </tr>
+            
+                {% for item in products %}       
+                    <tr>
+                        <td> {{item.name}} </td><td> {{item.price}} </td> <td><a href="{{ path('product', {id: item.id}) }}">go to item</a></td>
+                    </tr>
+                {% endfor %}   
+            
+            </table>
+        {% endif %}  
+    
+    {% endif %}
+
 
 {% endblock %}

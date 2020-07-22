@@ -13,8 +13,6 @@ use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\EntityManagerInterface;
 
-
-
 class RegistTestController extends AbstractController
 {
     public function registtest (Request $request)
@@ -43,7 +41,6 @@ class RegistTestController extends AbstractController
                 ],
             );
         }
-        
         else {
            
             $contents = $this->renderView('registtest/index.html.twig',
@@ -53,8 +50,6 @@ class RegistTestController extends AbstractController
                 ],
             );
         }
-
         return new Response($contents);
-        
     }
 }
