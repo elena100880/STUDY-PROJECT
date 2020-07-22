@@ -16,3 +16,7 @@ products:
 product:
             path: /product/{id}
             controller: App\Controller\ProductsController::product
+
+registtest:
+            path: /registtest
+            controller: App\Controller\RegistTestController::registtest          

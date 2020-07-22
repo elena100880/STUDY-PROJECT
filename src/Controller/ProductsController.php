@@ -32,19 +32,14 @@ class ProductsController extends AbstractController
         $product = $this->getDoctrine()
             ->getRepository(Product::class)
             ->find($id);
-        
-       
-        $contents = $this->renderView('oneitem/index.html.twig',
+               
+        $contents = $this->renderView('product/index.html.twig',
        
             [
-                'r_str' => ['odin'=>'ala', 'dwa'=>'ma', 'tree'=>'kot', 'four'=>'pies'],
-                'www'=>$a
+                'product' => $product,
             ],
-
-        
         );
 
         return new Response($contents);
     }
-
 }
