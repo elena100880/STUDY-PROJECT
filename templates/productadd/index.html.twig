@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}   
+
+{% block stylesheets1 %}
+            <link rel="stylesheet" href="/css/prod_add.css">
+           
+{% endblock %}
+
+{% block content %}           
+
+    {{form(form)}}
+  
+    {% if product is defined %}
+       
+        {% for item in product %}       
+            
+            {{item.name}} - {{item.price}}$ ({{item.description}})<br>
+    
+        {% endfor %}        
+ 
+    {% endif %}
+    
+
+{% endblock %}

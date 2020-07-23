@@ -20,3 +20,9 @@ product:
 registtest:
             path: /registtest
             controller: App\Controller\RegistTestController::registtest          
+
+product_add:
+            path: /productss/add
+            controller: App\Controller\ProductAddController::productadd         
+    
+
