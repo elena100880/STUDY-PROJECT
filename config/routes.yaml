@@ -25,4 +25,6 @@ product_add:
             path: /products/add
             controller: App\Controller\ProductAddController::productadd         
     
-
+product_edit:
+            path: /products/edit/{id}
+            controller: App\Controller\ProductEditController::productedit         

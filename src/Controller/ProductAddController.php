@@ -22,9 +22,9 @@ class ProductAddController extends AbstractController
         
         if ($form->isSubmitted()) {
            
-            $data = $form->getData();
+            /*$data = $form->getData();
 
-           /* $price=$data['price'];
+            $price=$data['price'];
             $name=$data['name'];
             $description=$data['description'];*/
             
