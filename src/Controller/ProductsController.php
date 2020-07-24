@@ -18,21 +18,15 @@ class ProductsController extends AbstractController
     public function products (Request $request)
     {
         $kot = $this->createFormBuilder()
-            
+            ->setMethod('GET')
             ->add('name', TextType::class)
             ->add('price', NumberType::class)
             ->add('send', SubmitType::class, ['label'=>'Show the chosen'])
-            ->add('sendall', SubmitType::class, ['label'=>'Show all items'])
+            //->add('sendall', SubmitType::class, ['label'=>'Show all items'])
             ->getForm();
 
         $kot->handleRequest($request);
 
-       /* $form2 = $this->createFormBuilder()
-            ->add('SEND', SubmitType::class, ['label'=>'Show all items'])
-            ->getForm();
-
-        $form2->handleRequest($request);*/
-        
         if ($kot->isSubmitted()) {
             
             $data = $kot->getData();
@@ -55,9 +49,15 @@ class ProductsController extends AbstractController
         }
         else 
         {
+            $products = $this->getDoctrine()
+                ->getRepository(Product::class)
+                ->findAll();
+            
+            
             $contents = $this->renderView('products/index.html.twig',
                     [
                         'kot' => $kot->createView(),
+                        'products' => $products,
                     ],
                 );
         }

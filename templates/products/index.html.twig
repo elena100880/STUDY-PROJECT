@@ -8,7 +8,10 @@
 {% block content %}  
     <h1>CHOOSE ITEMS</h1>         
 
-    {{form(kot)}}<br>
+    {{form(kot)}}
+
+   <button type="button"><a href="{{ path('products') }}">Show all items</a></button>
+
     
     {% if products is defined %}
         
