@@ -13,14 +13,24 @@
     {{name1}} - {{price1}} ({{description1}}) <br><br>
     
     <span>Enter your changes:</span><br>
-    {{form(form)}}
+    {{form(form1)}} {{form(form2)}}
     
     {% if save is defined%}
+
+        {% if save == "saved" %}  
         
-        <span>Saved changes in product with id {{product.id}}:</span><br>
-        Name: {{product.name}}<br>
-        Price: {{product.price}}<br>
-        Description: {{product.description}}<br>
+            <span>Changes in product with id {{product.id}} was saved:</span><br>
+            Name: {{product.name}}<br>
+            Price: {{product.price}}<br>
+            Description: {{product.description}}<br>
+
+        {% elseif save == "deleted" %}
+            <span>Product with id {{id}} was DELETED!!:</span><br>
+            Name: {{product.name}}<br>
+            Price: {{product.price}}<br>
+            Description: {{product.description}}<br>
+
+        {% endif %}
 
     {% endif %}
         

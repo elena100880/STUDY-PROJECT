@@ -25,16 +25,23 @@ class ProductEditController extends AbstractController
         $price1=$product->getPrice();
         $description1=$product->getDescription();
 
-        $form = $this->createForm (ProductType::class, $product);
-        $form->handleRequest($request);
-                  
-        if ($form->isSubmitted()) {
+        $form1 = $this->createForm (ProductType::class, $product);
+
+        $form2 = $this->createFormBuilder()
+            ->add('send', SubmitType::class, ['label'=>'Delete the item!!'])
+            ->getForm();
+        
+        $form1->handleRequest($request);
+        $form2->handleRequest($request);
+
+        if ($form1->isSubmitted()) {
             $save='saved';
             $productManager->flush();
                                       
             $contents = $this->renderView('productedit/index.html.twig',
                 [
-                    'form' => $form->createView(),
+                    'form1' => $form1->createView(),
+                    'form2' => $form2->createView(),
                     'id'=> $id,
                     'name1'=> $name1,
                     'price1'=> $price1,
@@ -43,12 +50,19 @@ class ProductEditController extends AbstractController
                     'save'=>$save,
                 ],
             );
+            return new Response($contents);
+        }
+        else if ($form2->isSubmitted()) {
+            
+            return $this->redirectToRoute('product_delete', ['id' => $id]);
+            
         }
         else 
         {
             $contents = $this->renderView('productedit/index.html.twig',
                     [
-                        'form' => $form->createView(),
+                        'form1' => $form1->createView(),
+                        'form2' => $form2->createView(),
                         'id'=> $id,
                         'name1'=> $name1,
                         'price1'=> $price1,
@@ -56,9 +70,35 @@ class ProductEditController extends AbstractController
                         'product' => $product,
                     ],
                 );
+            return new Response($contents);
         }
-        return new Response($contents);
+        
     }
+
+    public function productdelete ($id)
+    {
+        $productManager = $this->getDoctrine()->getManager();
+        $product = $productManager->getRepository(Product::class)->find($id);
+        
+        $productManager->remove($product);
+        $productManager->flush();
+
+        /*$contents = $this->renderView('productdelete/index.html.twig',
+                [
+                    'form1' => $form1->createView(),
+                    'form2' => $form2->createView(),
+                    'id'=> $id,
+                    'name1'=> $name1,
+                    'price1'=> $price1,
+                    'description1'=> $description1,
+                    'product' => $product,
+                    'save'=>$save,
+                ],
+            ); */
+
+        return $this->redirectToRoute('products');
+    }
+
 
    
 }

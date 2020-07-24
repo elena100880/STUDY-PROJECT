@@ -44,7 +44,7 @@ input[type="name"], input[type="price"]{
 	width: 200px;
 	
 }
-a {
+a.button {
 	text-decoration: none;
 	color: black;
 }

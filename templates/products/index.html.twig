@@ -10,9 +10,9 @@
 
     {{form(kot)}}
 
-   <button type="button"><a href="{{ path('products') }}">Show all items</a></button>
+   <button type="button"><a class="button" href="{{ path('products') }}">Show all items</a></button>
 
-   <button type="button" id="addbutton"><a href="{{ path('product_add') }}">Add new product</a></button>
+   <button type="button" id="addbutton"><a class="button" href="{{ path('product_add') }}">Add new product</a></button>
 
     
     {% if products is defined %}

@@ -28,3 +28,7 @@ product_add:
 product_edit:
             path: /products/edit/{id}
             controller: App\Controller\ProductEditController::productedit         
+
+product_delete:
+            path: /products/delete/{id}
+            controller: App\Controller\ProductEditController::productdelete

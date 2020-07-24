@@ -19,8 +19,8 @@ class ProductsController extends AbstractController
     {
         $kot = $this->createFormBuilder()
             ->setMethod('GET')
-            ->add('name', TextType::class)
-            ->add('price', NumberType::class)
+            ->add('name', TextType::class, ['label'=>'Name:'])
+            ->add('price', NumberType::class, ['label'=>'Price:'])
             ->add('send', SubmitType::class, ['label'=>'Show the chosen'])
             //->add('sendall', SubmitType::class, ['label'=>'Show all items'])
             ->getForm();
