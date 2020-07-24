@@ -5,6 +5,10 @@ namespace App\Entity;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+use App\Entity\Product;
+use App\Form\Type\ProductType;
+
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
  */

@@ -22,7 +22,7 @@ registtest:
             controller: App\Controller\RegistTestController::registtest          
 
 product_add:
-            path: /productss/add
+            path: /products/add
             controller: App\Controller\ProductAddController::productadd         
     
 

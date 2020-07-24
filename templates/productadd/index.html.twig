@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}   
 
 {% block stylesheets1 %}
-            <link rel="stylesheet" href="/css/prod_add.css">
+            <link rel="stylesheet" href="/css/prodadd.css">
            
 {% endblock %}
 
@@ -9,13 +9,9 @@
 
     {{form(form)}}
   
-    {% if product is defined %}
+    {% if id is defined%}
        
-        {% for item in product %}       
-            
-            {{item.name}} - {{item.price}}$ ({{item.description}})<br>
-    
-        {% endfor %}        
+        Saved new product with id: {{id}}.
  
     {% endif %}
     

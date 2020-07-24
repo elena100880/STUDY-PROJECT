@@ -4,50 +4,47 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\ResetType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use App\Entity\Product;
+use App\Form\Type\ProductType;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ProductAddController extends AbstractController
 {
-    public function productadd (Request $request)
+    public function productadd (Request $request): Response
     {
         $product = new Product();
-        $product->setName('sandals');
-        $product->setPrice('50');
-        
-        
-        $form = $this->createFormBuilder()
-            ->add('name', TextType::class)
-            ->add('price', NumberType::class)
-            ->add('SEND', SubmitType::class, ['label' => 'SEND'])
-            ->getForm();
-
+               
+        $form = $this->createForm (ProductType::class, $product);
+         
         $form->handleRequest($request);
         
         if ($form->isSubmitted()) {
-            
+           
             $data = $form->getData();
-            $price=$data['price'];
+
+           /* $price=$data['price'];
             $name=$data['name'];
+            $description=$data['description'];*/
             
-            $products = $this->getDoctrine()
-                ->getRepository(Product::class)
-                ->findBy(['price' => $price,
-                        'name' => $name
-                        ] );
-                
+            $productManager = $this->getDoctrine()->getManager();
+            
+           /* $product->setName('nnn');
+            $product->setPrice(50);
+            $product->setDescription('ddd');*/
+
+            $productManager->persist($product);
+            
+            $productManager->flush();
+            
+            $id=$product->getId();
+                          
             $contents = $this->renderView('productadd/index.html.twig',
                 [
                     'form' => $form->createView(),
-                    'product' => $product,
+                    'id'=>$id,
                 ],
-            
             );
         }
         else 
