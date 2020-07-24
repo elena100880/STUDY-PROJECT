@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
@@ -18,7 +19,7 @@ class ProductType extends AbstractType
             ->add('name', TextType::class, ['label'=>'Name'])
             ->add('price', NumberType::class, ['label'=>'Price in $'])
             ->add('description', TextareaType::class, ['label'=>'Description of the item'])
-            ->add('save', SubmitType::class)
+            ->add('save', SubmitType::class, ['label'=>'Add new product'])
         ;
     }
 

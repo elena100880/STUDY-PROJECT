@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class ProductAddController extends AbstractController
 {
-    public function productadd (Request $request): Response
+    public function productadd (Request $request)
     {
         $product = new Product();
                
@@ -22,30 +22,14 @@ class ProductAddController extends AbstractController
         
         if ($form->isSubmitted()) {
            
-            /*$data = $form->getData();
-
-            $price=$data['price'];
-            $name=$data['name'];
-            $description=$data['description'];*/
-            
             $productManager = $this->getDoctrine()->getManager();
-            
-           /* $product->setName('nnn');
-            $product->setPrice(50);
-            $product->setDescription('ddd');*/
-
             $productManager->persist($product);
-            
             $productManager->flush();
             
-            $id=$product->getId();
+          //  $id=$product->getId();
                           
-            $contents = $this->renderView('productadd/index.html.twig',
-                [
-                    'form' => $form->createView(),
-                    'id'=>$id,
-                ],
-            );
+            return $this->redirectToRoute('products');
+            
         }
         else 
         {
@@ -54,8 +38,9 @@ class ProductAddController extends AbstractController
                         'form' => $form->createView(),
                     ],
                 );
+            return new Response($contents);
         }
-        return new Response($contents);
+        
     }
 
    

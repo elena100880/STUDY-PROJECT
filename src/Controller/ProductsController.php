@@ -37,15 +37,7 @@ class ProductsController extends AbstractController
                 ->getRepository(Product::class)
                 ->findBy(['price' => $price,
                         'name' => $name
-                        ] );
-                
-            $contents = $this->renderView('products/index.html.twig',
-                [
-                    'kot' => $kot->createView(),
-                    'products' => $products,
-                ],
-            
-            );
+                        ]);
         }
         else 
         {
@@ -53,14 +45,15 @@ class ProductsController extends AbstractController
                 ->getRepository(Product::class)
                 ->findAll();
             
-            
-            $contents = $this->renderView('products/index.html.twig',
-                    [
-                        'kot' => $kot->createView(),
-                        'products' => $products,
-                    ],
-                );
-        }
+        } 
+
+        $contents = $this->renderView('products/index.html.twig',
+            [
+                'kot' => $kot->createView(),
+                'products' => $products,
+            ],
+        );
+        
         return new Response($contents);
     }
 
@@ -71,7 +64,6 @@ class ProductsController extends AbstractController
             ->find($id);
                
         $contents = $this->renderView('product/index.html.twig',
-       
             [
                 'product' => $product,
             ],
