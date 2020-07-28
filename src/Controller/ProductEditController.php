@@ -25,8 +25,9 @@ class ProductEditController extends AbstractController
         $price1=$product->getPrice();
         $description1=$product->getDescription();
 
-        $form1 = $this->createForm (ProductType::class, $product);
-
+        $form1 = $this->createForm (ProductType::class, $product)
+            ->add('save', SubmitType::class, ['label'=> 'Save changes']);
+           
         $form2 = $this->createFormBuilder()
             ->add('send', SubmitType::class, ['label'=>'Delete the item!!'])
             ->getForm();
@@ -83,22 +84,6 @@ class ProductEditController extends AbstractController
         $productManager->remove($product);
         $productManager->flush();
 
-        /*$contents = $this->renderView('productdelete/index.html.twig',
-                [
-                    'form1' => $form1->createView(),
-                    'form2' => $form2->createView(),
-                    'id'=> $id,
-                    'name1'=> $name1,
-                    'price1'=> $price1,
-                    'description1'=> $description1,
-                    'product' => $product,
-                    'save'=>$save,
-                ],
-            ); */
-
         return $this->redirectToRoute('products');
     }
-
-
-   
 }

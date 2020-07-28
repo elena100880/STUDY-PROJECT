@@ -28,7 +28,7 @@ label {
 	width: 200px;
 	box-sizing: content-box;
 }
-input {
+input, textarea {
 	color: gray;
 	width: 200px;
 	

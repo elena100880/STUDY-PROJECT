@@ -19,7 +19,7 @@ class ProductType extends AbstractType
             ->add('name', TextType::class, ['label'=>'Name:'])
             ->add('price', NumberType::class, ['label'=>'Price in $:'])
             ->add('description', TextareaType::class, ['label'=>'Description of the item:'])
-            ->add('save', SubmitType::class)
+            
         ;
     }
 

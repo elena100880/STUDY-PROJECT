@@ -13,7 +13,9 @@
     {{name1}} - {{price1}} ({{description1}}) <br><br>
     
     <span>Enter your changes:</span><br>
-    {{form(form1)}} {{form(form2)}}
+    {{form(form1)}}
+        
+    {{form(form2)}}
     
     {% if save is defined%}
 
@@ -33,6 +35,4 @@
         {% endif %}
 
     {% endif %}
-        
-
 {% endblock %}

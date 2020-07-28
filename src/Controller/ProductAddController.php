@@ -4,6 +4,9 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use App\Entity\Product;
 use App\Form\Type\ProductType;
 use App\Repository\ProductRepository;
@@ -16,7 +19,8 @@ class ProductAddController extends AbstractController
     {
         $product = new Product();
                
-        $form = $this->createForm (ProductType::class, $product);
+        $form = $this->createForm (ProductType::class, $product)
+            ->add('save', SubmitType::class, ['label'=>'Add the item']);
          
         $form->handleRequest($request);
         
