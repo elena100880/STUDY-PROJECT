@@ -5,10 +5,30 @@ app_lucky_number:
     path: /lucky/number
     controller: App\Controller\LuckyController::number
 
-app_prod:
-        path: /prod
-        controller: App\Controller\ProductController::index
-
 registration:
             path: /registration
             controller: App\Controller\RegistController::registration
+
+products:
+            path: /products
+            controller: App\Controller\ProductsController::products
+
+product:
+            path: /product/{id}
+            controller: App\Controller\ProductsController::product
+
+registtest:
+            path: /registtest
+            controller: App\Controller\RegistTestController::registtest          
+
+product_add:
+            path: /products/add
+            controller: App\Controller\ProductAddController::productadd         
+    
+product_edit:
+            path: /products/edit/{id}
+            controller: App\Controller\ProductEditController::productedit         
+
+product_delete:
+            path: /products/delete/{id}
+            controller: App\Controller\ProductEditController::productdelete

@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}   
+
+{% block stylesheets1 %}
+            <link rel="stylesheet" href="/css/prods1.css">
+           
+{% endblock %}
+
+{% block content %}  
+    <h1>LIST OF ITEMS</h1>         
+
+    {{form(kot)}}
+
+   <button type="button"><a class="button" href="{{ path('products') }}">Show all items</a></button>
+
+   <button type="button" id="addbutton"><a class="button" href="{{ path('product_add') }}">Add new product</a></button>
+
+    
+   
+        {% if  not products %}
+            NO MATCHING!!
+        {% else %}  
+            <table>
+                <tr>
+                    <th>Name</th><th>Price</th><th>Category</th><th>Link to an item</th><th>Adding changes to an item</th>
+                </tr>
+            
+                {% for item in products %}  
+                
+                
+                    <tr>
+                        <td> {{item.name}} </td><td> {{item.price}}</td><td> {{item.category.name}} </td>
+                        <td><a href="{{ path('product', {id: item.id}) }}">go to the item</a></td>
+                        <td><a href="{{ path('product_edit', {id: item.id}) }}">change the itemm</a></td>
+                    </tr>
+
+
+                    
+                {% endfor %}   
+            
+            </table>
+        {% endif %}  
+    
+    
+
+{% endblock %}

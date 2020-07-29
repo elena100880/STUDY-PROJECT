@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}   
+
+{% block stylesheets1 %}
+            <link rel="stylesheet" href="/css/prodedit1.css">
+           
+{% endblock %}
+
+{% block content %}           
+
+    <h1>CHANGING ITEMS</h1>     
+
+    <span>You are changing the item with id {{id}}:</span><br>
+    {{name1}} - {{price1}} ({{description1}}) <br><br>
+    
+    <span>Enter your changes:</span><br>
+    {{form(form1)}}
+        
+    {{form(form2)}}
+    
+    {% if save is defined%}
+
+        {% if save == "saved" %}  
+        
+            <span>Changes in product with id {{product.id}} was saved:</span><br>
+            Name: {{product.name}}<br>
+            Price: {{product.price}}<br>
+            Description: {{product.description}}<br>
+
+        {% elseif save == "deleted" %}
+            <span>Product with id {{id}} was DELETED!!:</span><br>
+            Name: {{product.name}}<br>
+            Price: {{product.price}}<br>
+            Description: {{product.description}}<br>
+
+        {% endif %}
+
+    {% endif %}
+{% endblock %}

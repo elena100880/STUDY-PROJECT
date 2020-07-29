@@ -1,19 +1,30 @@
 .content {
 	width: 700px;
+	min-height: 200px;
 	padding-left: 250px;
 	padding-top: 6px;
+	padding-bottom: 15px;
 	text-align: left;
-	padding-bottom: 10px;
+}
+table {
+	margin-bottom: 10px;
+	border-collapse: collapse;
+}
+td, th {
+	border: 1px solid green;
+	border-collapse: collapse;
+	padding: 5px;
 }
 #form > div{
 	margin-top: 0px;
 }
 button {
-	float:left;
+	
 	color: black;
 	margin: 20px 10px 20px 10px;
 	padding: 10px;
 	width: 100px;
+	height: 55px;
 	font-family: 'Open Sans', sans-serif;
 	font-weight: bold;
 	background-color: mediumSeaGreen;
@@ -28,18 +39,17 @@ label {
 	width: 200px;
 	box-sizing: content-box;
 }
-input[type="password"], input[type="email"]{
-	color: gray;
+input, select {
+	color: black;
 	width: 200px;
+	box-sizing: content-box;
+	padding: 0;
 	
 }
-#message {
-	height: 40px;
-	clear: both;
-	font-size: 25px;
-	font-weight: bold;
-	color: red;
-	padding-left: 10px;
+a.button {
+	text-decoration: none;
+	color: black;
 }
-
-
+#addbutton {
+	margin-left: 200px;
+} 

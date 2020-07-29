@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}   
+
+{% block stylesheets1 %}
+            <link rel="stylesheet" href="/css/prodadd2.css">
+           
+{% endblock %}
+
+{% block content %}           
+
+    <h1>ADDING PRODUCTS</h1>      
+
+    {{form(form)}}
+  
+    {% if id is defined%}
+       
+        Saved new product with id: {{id}}.
+ 
+    {% endif %}
+    
+
+{% endblock %}

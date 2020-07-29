@@ -1,24 +1,33 @@
 .content {
 	width: 700px;
+	min-height: 200px;
 	padding-left: 250px;
 	padding-top: 6px;
+	padding-bottom: 15px;
 	text-align: left;
-	padding-bottom: 10px;
 }
 #form > div{
 	margin-top: 0px;
 }
 button {
-	float:left;
+	
 	color: black;
 	margin: 20px 10px 20px 10px;
 	padding: 10px;
 	width: 100px;
+	min-height: 80px;
 	font-family: 'Open Sans', sans-serif;
 	font-weight: bold;
 	background-color: mediumSeaGreen;
 	border: 2px solid black;
-	text-transform: capitalize;
+	
+}
+#form_send {
+	
+	background-color: red;
+}
+footer {
+	clear: both;
 }
 label {
 	color: green;
@@ -28,18 +37,17 @@ label {
 	width: 200px;
 	box-sizing: content-box;
 }
-input[type="password"], input[type="email"]{
-	color: gray;
+input, textarea, select, option {
+	color: black;
 	width: 200px;
-	
+	padding: 2px;
+	box-sizing: content-box;
 }
-#message {
-	height: 40px;
-	clear: both;
-	font-size: 25px;
-	font-weight: bold;
-	color: red;
-	padding-left: 10px;
+
+span {
+	color:red;
+	font-weight: bold;;
 }
+
 
 
