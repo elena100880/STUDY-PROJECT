@@ -11,6 +11,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
+use App\Entity\Category;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
 class ProductType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -19,6 +22,13 @@ class ProductType extends AbstractType
             ->add('name', TextType::class, ['label'=>'Name:'])
             ->add('price', NumberType::class, ['label'=>'Price in $:'])
             ->add('description', TextareaType::class, ['label'=>'Description of the item:'])
+            ->add ('category', EntityType::class, [
+                'class'=> Category::class,
+                'choice_label' => 'name',
+                'label' => 'Choose category:',
+                //'multiple' => true,
+               // 'expanded' => true,
+            ])
             
         ;
     }

@@ -37,11 +37,13 @@ label {
 	width: 200px;
 	box-sizing: content-box;
 }
-input, textarea {
-	
+input, textarea, select, option {
+	color: black;
 	width: 200px;
-	
+	padding: 2px;
+	box-sizing: content-box;
 }
+
 span {
 	color:red;
 	font-weight: bold;;
