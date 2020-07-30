@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}   
+
+{% block stylesheets1 %}
+            <link rel="stylesheet" href="/css/prodedit1.css">
+           
+{% endblock %}
+
+{% block content %}           
+
+    <h1>CHANGING CATEGORIES</h1>     
+
+    <span>You are changing the category with id {{id}}:</span><br>
+        Name:  {{category.name}}  <br>
+    {% if category.parent.name is defined %}
+        Parent: {{category.parent.name}} <br>
+    {% else %}
+        Parent: without Parent <br>
+    {% endif %}
+    <br><br>
+
+    <span>Enter your changes:</span><br>
+    {{form(form1)}}
+    <br>
+
+    <span>List of child categories:</span><br>
+
+    {% for childCat in childCategories %} 
+        
+        <a href="{{ path('category_edit', {id: childCat.id}) }}">{{childCat.name}}</a><br>
+    
+    {% endfor %}  
+    
+    <button type="button"><a class="button" href="{{ path('category_add', {id: id}) }}">Add another child</a></button>
+
+
+{% endblock %}

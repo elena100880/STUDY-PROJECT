@@ -10,6 +10,10 @@
     <h1>ADDING PRODUCTS</h1>      
 
     {{form(form)}}
+
+    <button type="button" id="addbutton"><a class="button" href="{{ path('category_add') }}">Add new category</a></button>
+
+    <button type="button" id="addbutton"><a class="button" href="{{ path('categories') }}">Show all categories</a></button>
   
     {% if id is defined%}
        

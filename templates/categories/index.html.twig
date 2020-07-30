@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}   
+
+{% block stylesheets1 %}
+            <link rel="stylesheet" href="/css/categories.css">
+           
+{% endblock %}
+
+{% block content %}  
+    <h1>LIST OF CATEGORIES</h1>         
+
+    <table>
+            <tr>
+                <th>Parent category</th><th>Category</th><th>Changes to the Parent category</th><th>Changes to the category</th>
+            </tr>
+            
+        {% for cat in categories %}  
+            <tr>
+                {% if cat.parent %}  
+                    <td>{{cat.parent.name}}</td>
+                    <td> {{cat.name}} </td>
+                    <td><a href="{{ path('category_edit', {id: cat.parent.id}) }}">change the Parent Category</a></td>
+                    <td><a href="{{ path('category_edit', {id: cat.id}) }}">change the Category</a></td>
+                {% else %}  
+                    <td>{{cat.name}}</td>
+                    <td> </td> 
+                    <td><a href="{{ path('category_edit', {id: cat.id}) }}">change the Parent Category</a></td>
+                    <td></td>
+                {% endif %}
+            </tr>
+        {% endfor %}   
+            
+    </table>
+{% endblock %}

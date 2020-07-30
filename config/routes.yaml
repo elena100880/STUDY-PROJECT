@@ -32,3 +32,18 @@ product_edit:
 product_delete:
             path: /products/delete/{id}
             controller: App\Controller\ProductEditController::productdelete
+
+categories:
+            path: /categories
+            controller: App\Controller\CategoriesController::categories
+
+category_add:
+            path: /category/add/{id}
+            defaults: {id: 0}
+            controller: App\Controller\CategoryAddController::categoryadd
+
+category_edit:
+                path: /category/edit/{id}
+                controller: App\Controller\CategoryEditController::categoryedit   
+
+
