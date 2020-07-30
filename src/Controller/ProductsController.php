@@ -79,12 +79,9 @@ class ProductsController extends AbstractController
                 [
                     'kot' => $kot->createView(),
                     'products' => $products,
-                     
                 ],
             );    
-            
         } 
-  
         return new Response($contents);
     }
 
