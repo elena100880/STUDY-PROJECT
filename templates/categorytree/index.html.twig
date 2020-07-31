@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}   
+
+{% block stylesheets1 %}
+            <link rel="stylesheet" href="/css/tree.css">
+           
+{% endblock %}
+
+{% block content %}  
+    <h1>LIST OF CHILDS</h1>         
+
+    
+    <span>List of child categories:</span><br>
+
+    {% for name in names %} 
+        
+        {{name}}<br>
+    
+    {% endfor %}  
+    
+    
+
+{% endblock %}
