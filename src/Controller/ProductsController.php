@@ -24,14 +24,20 @@ class ProductsController extends AbstractController
     {
         $kot = $this->createFormBuilder()
             ->setMethod('GET')
-            ->add('name', TextType::class, ['label'=>'Name:'])
-            ->add('price_min', NumberType::class, ['label'=>'Price from:'])
-            ->add('price_max', NumberType::class, ['label'=>'Price to:'])
+            ->add('name', TextType::class, ['label'=>'Name:',
+                                            'required' => false])
+            ->add('price_min', NumberType::class, ['label'=>'Price from:',
+                                                    'required' => false])
+            ->add('price_max', NumberType::class, ['label'=>'Price to:',
+                                                    'required' => false])
             ->add ('category', EntityType::class, [
                 'class'=> Category::class,
                 'choice_label' => 'name',
                 'label' => 'Choose category:',
-                'multiple' => true,])
+                'multiple' => true, 
+                'required' => false,
+                //'attr' => array('placeholder' => '') 
+                ])
             ->add('send', SubmitType::class, ['label'=>'Show the chosen'])
             ->getForm();
 
@@ -43,21 +49,50 @@ class ProductsController extends AbstractController
             $price_min=$data['price_min'];
             $price_max=$data['price_max'];
             $name=$data['name'];
-            $category=$data['category'];
+            $categories=$data['category'];
+           
+            function getAllId ($categories) {
+                
+                $all_id= Array();
 
-           // $qb = $this->getDoctrine()->getRepository(Product::class)->createQueryBuilder('p')
+                foreach ($categories as $cat) {
+                   
+                    array_push ($all_id, $cat->getId() );
+                    $childs=$cat->getChildCategories(); 
+                                            
+                    $all_id=array_merge ($all_id, getAllId($childs));
+                   
+                }             
+                return $all_id;
+            } 
+    
+            $all_id=getAllId ($categories);
+
+            //$qb = $this->getDoctrine()->getRepository(Product::class)->createQueryBuilder('p')
                 $em = $this->getDoctrine()->getManager();
                 $qb = $em->createQueryBuilder()
-                        ->select('p')
-                        ->from ('App\Entity\Product', 'p')
+                        -> select('p, c')
+                        -> from ('App\Entity\Product', 'p')
+                        -> join ('p.category', 'c')
+                        -> orderBy('p.price', 'DESC');
 
-                        ->where ('p.price >=:price_min AND p.price <= :price_max AND p.name = :name')
-                        ->setParameter('price_min', $price_min)
-                        ->setParameter('price_max', $price_max)
-                        ->setParameter('name', $name)
-                        ->orderBy('p.price', 'DESC')
-                        ;
-            $products = $qb->getQuery()-> getResult();
+                if (isset($name)) {
+                    $qb= $qb-> setParameter('name', $name)
+                            -> andWhere('p.name = :name');
+                }            
+                if (isset($price_max)) {
+                    $qb= $qb-> setParameter('price_max', $price_max)
+                            -> andWhere('p.price <= :price_max');
+                }        
+                if (isset($price_min)) {
+                    $qb= $qb-> setParameter('price_min', $price_min)
+                            -> andWhere('p.price >=:price_min');
+                }  
+                if (!empty($all_id)) {
+                    $qb= $qb-> setParameter('all_id', $all_id)
+                            -> andWhere('c.id in (:all_id)');
+                }              
+                $products = $qb->getQuery()-> getResult();
 
 
 
@@ -67,7 +102,7 @@ class ProductsController extends AbstractController
                         'name' => $name,
                         ]);*/
             
-            $productsFilter = Array();
+        /*    $productsFilter = Array();
             $i=0;
             foreach ($products as $prod) {
                 
@@ -80,13 +115,12 @@ class ProductsController extends AbstractController
                     }
                 }
             }
-            $products=$productsFilter;
+            $products=$productsFilter;  */
             $contents = $this->renderView('products/index.html.twig',
                 [
                     'kot' => $kot->createView(),
                     'products' => $products,
                     //'category' =>$category,
-                    //'productsFilter' => $productsFilter, 
                 ],
             );               
         }
