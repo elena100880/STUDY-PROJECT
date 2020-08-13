@@ -13,8 +13,17 @@ use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\EntityManagerInterface;
 
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
 class ProductEditController extends AbstractController
 {
+    private $session;
+
+    public function __construct(SessionInterface $session)
+    {
+        $this->session = $session;
+    }
+
     public function productedit (Request $request, $id)
     {
         $productManager = $this->getDoctrine()->getManager();
@@ -35,6 +44,10 @@ class ProductEditController extends AbstractController
         $form1->handleRequest($request);
         $form2->handleRequest($request);
 
+        //$quantity=$this->session->get($id);
+        //$this->session->set('quantity', $quantity);
+
+
         if ($form1->isSubmitted()) {
             $save='saved';
             $productManager->flush();
@@ -49,6 +62,7 @@ class ProductEditController extends AbstractController
                     'description1'=> $description1,
                     'product' => $product,
                     'save'=>$save,
+                    'quantity'=>$this->session->get($id),
                 ],
             );
             return new Response($contents);
@@ -69,6 +83,7 @@ class ProductEditController extends AbstractController
                         'price1'=> $price1,
                         'description1'=> $description1,
                         'product' => $product,
+                        'quantity'=>$this->session->get($id, 0),
                     ],
                 );
             return new Response($contents);
