@@ -92,7 +92,16 @@ class ProductsController extends AbstractController
                     $qb= $qb-> setParameter('all_id', $all_id)
                             -> andWhere('c.id in (:all_id)');
                 }              
-                $products = $qb->getQuery()-> getResult();
+                
+                $dql=$qb->getDQL();
+
+                $q=$qb->getQuery();
+                $sql=$q->getSQL();
+                $param=$q->getParameters();
+
+               
+                //$param=$q->getParameters();
+                $products = $qb->getQuery() -> getResult();
 
 
 
@@ -120,6 +129,9 @@ class ProductsController extends AbstractController
                 [
                     'kot' => $kot->createView(),
                     'products' => $products,
+                    'sql' => $sql,
+                    'dql' => $dql,
+                    'param' => $param
                     //'category' =>$category,
                 ],
             );               

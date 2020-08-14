@@ -36,7 +36,13 @@
             
             </table>
         {% endif %}  
-    
+
+        {% if sql is defined %}
+          {{sql}}<br><br>
+          {{dql}}<br><br>
+          {{param}}
+         
+        {% endif %}  
     
 
 {% endblock %}
