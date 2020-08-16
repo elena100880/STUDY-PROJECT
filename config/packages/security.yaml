@@ -14,11 +14,26 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
+        edit:
+            pattern: ^/products/edit/
+            provider: app_user_provider
+            http_basic:
+                realm: Secured Area
+            logout:
+                path: app_logout
+                target: products
+               
+                
+                
+        
         main:
+            
             anonymous: true
             lazy: true
             provider: app_user_provider
-
+           
+        
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 

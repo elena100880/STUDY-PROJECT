@@ -57,3 +57,8 @@ product_tocart:
 product_fromcart:
             path: /product/cart_delete/{id}
             controller: App\Controller\ProductToCartController::product_fromcart
+
+app_logout:
+            path: /logout
+            methods: GET
+            
