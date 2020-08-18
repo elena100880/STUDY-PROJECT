@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}   
 
 {% block stylesheets1 %}
-            <link rel="stylesheet" href="/css/addtocart2.css">
+            <link rel="stylesheet" href="/css/addtocart.css">
            
 {% endblock %}
 
@@ -13,13 +13,13 @@
     {{name1}} - {{price1}} ({{description1}}) <br>
     Image of the Product:<br>
     {% if image1 != null %}
-        {#  <a href="{{ asset('uploads/images/' ~ product.image) }}">View image</a>  #}
+        <a href="{{ asset('uploads/images/' ~ image1) }}"><img src="{{ asset('uploads/images/' ~ image1) }}" alt="product"></a> 
               
         <img src="{{ asset('uploads/images/' ~ image1) }}" alt="product">
 
     {% else %}
 
-        <span id = "image">     < no image ></span>
+        <span class = "image">     < no image ></span>
         
     {% endif %}
     <br><br>
@@ -46,7 +46,14 @@
             new Name: {{product.name}}<br>
             new Price: {{product.price}}<br>
             new Description: {{product.description}}<br>
-            new Image: {{product.image}}
+            {% if  product.image != null %}
+                new Image:  <a href="{{ asset('uploads/images/' ~ product.image) }}"><img src="{{ asset('uploads/images/' ~ product.image) }}" alt="product"></a> 
+            
+            {% else %}
+
+                <span class = "image">     < no image ></span>
+                
+            {% endif %}
           
 
         {% elseif save == "deleted" %}

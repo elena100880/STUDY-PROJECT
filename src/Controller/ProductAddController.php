@@ -15,7 +15,7 @@ use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\EntityManagerInterface;
 
-//use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ProductAddController extends AbstractController
@@ -28,7 +28,7 @@ class ProductAddController extends AbstractController
     }
 
 
-    public function productadd (Request $request)
+    public function productadd (Request $request, SluggerInterface $slugger)
     {
         $product = new Product();
                
@@ -45,21 +45,28 @@ class ProductAddController extends AbstractController
             
                 // $image сохраняет загруженный PDF файл
                 //   /** @var Symfony\Component\HttpFoundation\File\UploadedFile $image */
-            $image = $product->getImage();
+            //$image = $product->getImage();
+            $image = $form->get('image')->getData();
             
                 // this condition is needed because the 'image' field is not required, so the  file must be processed only when a file is uploaded
             if ($image) {
                 // this is needed to safely include the file name as part of the URL
-                $imageName = $this->generateUniqueImageName().'.'.$image->guessExtension();
+                
+                //$imageName = $this->generateUniqueImageName().'.'.$image->guessExtension();
+                $originalImageName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+
+                $safeImageName = $slugger->slug($originalImageName);
+
+                $newImageName = $safeImageName.'-'.uniqid().'.'.$image->guessExtension();
                 
                     // Move the file to the directory where images are stored
                 $image->move(
                     $this->getParameter('images_directory'),
-                    $imageName
+                    $newImageName
                 );
 
                     // обновляет свойство 'image', чтобы сохранить имя файла PDF вместо его содержаиия
-                $product->setImage($imageName);
+                $product->setImage($newImageName);
             }
             
             $productManager = $this->getDoctrine()->getManager();

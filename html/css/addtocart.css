@@ -63,7 +63,7 @@ img {
 	width: 100px;
 	
 }
-#image {
+.image {
 	white-space: pre;
 	font-style:italic; 
 	color: grey; 

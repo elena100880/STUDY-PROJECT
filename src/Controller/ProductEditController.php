@@ -18,15 +18,20 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ProductEditController extends AbstractController
 {
+      
     private $session;
 
     public function __construct(SessionInterface $session)
     {
         $this->session = $session;
     }
+
+    
 
     public function productedit (Request $request, $id)
     {
@@ -44,11 +49,11 @@ class ProductEditController extends AbstractController
                 new File($this->getParameter('images_directory').'/'.$product->getImage())
             );
         }
-        
+
         $form1 = $this->createForm (ProductType::class, $product)
             ->add('image', FileType::class, ['label' => 'Image of the Product (JPG or PNG file):' ,
                                             'required' => false, 
-                                            'attr' => array('accept'=> 'image/png, image/jpeg')  ] )
+                                            'attr' => array('accept'=> 'image/png, image/jpeg')  ]  )
 
             ->add('save', SubmitType::class, ['label'=> 'Save changes']);
            
@@ -65,6 +70,24 @@ class ProductEditController extends AbstractController
 
         if ($form1->isSubmitted()) {
             $save='saved';
+            
+            $image = $product->getImage();
+            
+            if ($image) {
+                                
+                $imageName = $this->generateUniqueImageName().'.'.$image->guessExtension();
+                 
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $imageName
+                    );
+
+                $product->setImage($imageName);
+            }
+            else {
+                $product->setImage($image1);
+            }
+
             $productManager->flush();
                                       
             $contents = $this->renderView('productedit/index.html.twig',
@@ -108,6 +131,14 @@ class ProductEditController extends AbstractController
         
     }
 
+    private function generateUniqueImageName()
+    {
+        // md5() уменьшает схожесть имён файлов, сгенерированных
+        // uniqid(), которые основанный на временных отметках
+        return md5(uniqid());
+    }
+
+    
     public function productdelete ($id)
     {
         $productManager = $this->getDoctrine()->getManager();

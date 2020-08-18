@@ -47,9 +47,8 @@ class Product
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     
      * 
-     * 
-     * @Assert\Image(mimeTypes={ "image/jpeg, image/png" } )
      * 
      */
     private $image;
@@ -112,7 +111,7 @@ class Product
         return $this->image;
     }
 
-    public function setImage($image): self
+    public function setImage( $image): self
     {
         $this->image = $image;
 
