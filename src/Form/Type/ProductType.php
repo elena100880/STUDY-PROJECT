@@ -28,7 +28,8 @@ class ProductType extends AbstractType
                 'label' => 'Choose category:',
                 //'multiple' => true,
                // 'expanded' => true,
-            ])
+                ])
+            
             
         ;
     }

@@ -6,3 +6,14 @@
 	padding-bottom: 20px;
 	text-align: left;
 }
+img {
+	width: 100px;
+	
+	
+}
+#image {
+	white-space: pre;
+	font-style:italic; 
+	color: grey; 
+	font-weight:normal
+}

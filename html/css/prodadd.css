@@ -30,7 +30,7 @@ label {
 }
 input, textarea, select, option {
 	color: black;
-	width: 200px;
+	width: 250px;
 	padding: 2px;
 	box-sizing: content-box;
 }

@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+
 use App\Entity\Product;
 use App\Form\Type\ProductType;
 use App\Repository\ProductRepository;
@@ -14,6 +16,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\EntityManagerInterface;
 
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
+use Symfony\Component\HttpFoundation\File\File;
 
 class ProductEditController extends AbstractController
 {
@@ -33,8 +37,19 @@ class ProductEditController extends AbstractController
         $name1=$product->getName();
         $price1=$product->getPrice();
         $description1=$product->getDescription();
-
+        $image1=$product->getImage();
+               
+        if ($image1 != null) {
+            $product->setImage(
+                new File($this->getParameter('images_directory').'/'.$product->getImage())
+            );
+        }
+        
         $form1 = $this->createForm (ProductType::class, $product)
+            ->add('image', FileType::class, ['label' => 'Image of the Product (JPG or PNG file):' ,
+                                            'required' => false, 
+                                            'attr' => array('accept'=> 'image/png, image/jpeg')  ] )
+
             ->add('save', SubmitType::class, ['label'=> 'Save changes']);
            
         $form2 = $this->createFormBuilder()
@@ -60,6 +75,7 @@ class ProductEditController extends AbstractController
                     'name1'=> $name1,
                     'price1'=> $price1,
                     'description1'=> $description1,
+                    'image1' => $image1,
                     'product' => $product,
                     'save'=>$save,
                     'quantity'=>$this->session->get($id),
@@ -82,6 +98,7 @@ class ProductEditController extends AbstractController
                         'name1'=> $name1,
                         'price1'=> $price1,
                         'description1'=> $description1,
+                        'image1' => $image1,
                         'product' => $product,
                         'quantity'=>$this->session->get($id, 0),
                     ],

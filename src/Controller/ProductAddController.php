@@ -7,25 +7,61 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+
 use App\Entity\Product;
 use App\Form\Type\ProductType;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\EntityManagerInterface;
 
+//use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\String\Slugger\SluggerInterface;
+
 class ProductAddController extends AbstractController
 {
+    private $slugger;
+
+    public function __construct(SluggerInterface $slugger)
+    {
+        $this->slugger = $slugger;
+    }
+
+
     public function productadd (Request $request)
     {
         $product = new Product();
                
         $form = $this->createForm (ProductType::class, $product)
+            ->add('image', FileType::class, ['label' => 'Add an image of the Product (JPG or PNG file):' ,
+                                            'required' => false, 
+                                            'attr' => array('accept'=> 'image/png, image/jpeg')  ] )
             ->add('save', SubmitType::class, ['label'=>'Add the item']);
          
         $form->handleRequest($request);
-        
+       
+
         if ($form->isSubmitted()) {
-           
+            
+                // $image сохраняет загруженный PDF файл
+                //   /** @var Symfony\Component\HttpFoundation\File\UploadedFile $image */
+            $image = $product->getImage();
+            
+                // this condition is needed because the 'image' field is not required, so the  file must be processed only when a file is uploaded
+            if ($image) {
+                // this is needed to safely include the file name as part of the URL
+                $imageName = $this->generateUniqueImageName().'.'.$image->guessExtension();
+                
+                    // Move the file to the directory where images are stored
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $imageName
+                );
+
+                    // обновляет свойство 'image', чтобы сохранить имя файла PDF вместо его содержаиия
+                $product->setImage($imageName);
+            }
+            
             $productManager = $this->getDoctrine()->getManager();
             $productManager->persist($product);
             $productManager->flush();
@@ -45,6 +81,13 @@ class ProductAddController extends AbstractController
             return new Response($contents);
         }
         
+    }
+
+    private function generateUniqueImageName()
+    {
+        // md5() уменьшает схожесть имён файлов, сгенерированных
+        // uniqid(), которые основанный на временных отметках
+        return md5(uniqid());
     }
 
    
