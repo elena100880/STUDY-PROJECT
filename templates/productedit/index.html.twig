@@ -52,19 +52,15 @@
                 new Image:  <a href="{{ asset('uploads/images/' ~ product.image) }}"><img src="{{ asset('uploads/images/' ~ product.image) }}" alt="product"></a> 
             
             {% else %}
-
                 <span class = "image">     < no image ></span>
-                
             {% endif %}
-          
-
-        {% elseif save == "deleted" %}
+    
+     {#   {% elseif save == "deleted" %}
             <span>Product with id {{id}} was DELETED!!:</span><br>
             Name: {{product.name}}<br>
             Price: {{product.price}}<br>
-            Description: {{product.description}}<br>
+            Description: {{product.description}}<br>  #}
 
         {% endif %}
-
     {% endif %}
 {% endblock %}
