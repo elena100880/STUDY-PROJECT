@@ -11,11 +11,12 @@
 
     <span>You are changing the item with id {{id}}:</span><br>
     {{name1}} - {{price1}} ({{description1}}) <br>
+    Category: {{category1.name}} <br>
     Image of the Product:<br>
     {% if image1 != null %}
         <a href="{{ asset('uploads/images/' ~ image1) }}"><img src="{{ asset('uploads/images/' ~ image1) }}" alt="product"></a> 
               
-        <img src="{{ asset('uploads/images/' ~ image1) }}" alt="product">
+       {# <img src="{{ asset('uploads/images/' ~ image1) }}" alt="product"> #}
 
     {% else %}
 
@@ -46,6 +47,7 @@
             new Name: {{product.name}}<br>
             new Price: {{product.price}}<br>
             new Description: {{product.description}}<br>
+            new Category: {{product.category.name}}<br>
             {% if  product.image != null %}
                 new Image:  <a href="{{ asset('uploads/images/' ~ product.image) }}"><img src="{{ asset('uploads/images/' ~ product.image) }}" alt="product"></a> 
             

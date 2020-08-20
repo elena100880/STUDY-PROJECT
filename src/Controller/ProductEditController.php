@@ -8,6 +8,14 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Category;
+use App\Form\CategoryType;
+use App\Repository\CategoryRepository;
 
 use App\Entity\Product;
 use App\Form\Type\ProductType;
@@ -43,6 +51,7 @@ class ProductEditController extends AbstractController
         $price1=$product->getPrice();
         $description1=$product->getDescription();
         $image1=$product->getImage();
+        $category1=$product->getCategory();
                
         if ($image1 != null) {
             $product->setImage(
@@ -50,12 +59,41 @@ class ProductEditController extends AbstractController
             );
         }
 
+
         $form1 = $this->createForm (ProductType::class, $product)
             ->add('image', FileType::class, ['label' => 'Image of the Product (JPG or PNG file):' ,
                                             'required' => false, 
-                                            'attr' => array('accept'=> 'image/png, image/jpeg')  ]  )
+                                            'attr' => array('accept'=> 'image/png, image/jpeg'),
+                                                ])
+
+            ->add('delimage', CheckboxType::class, ['label'=> 'Delete all images:',
+                                                    'required' => false, 
+                                                    'mapped' => false,
+                                                    ])
 
             ->add('save', SubmitType::class, ['label'=> 'Save changes']);
+       
+        /*$this->createFormBuilder()
+            ->add('name', TextType::class, ['label'=>'Name:', 'data' => $name1])
+            ->add('price', NumberType::class, ['label'=>'Price in $:', 'data' => $price1])
+            ->add('description', TextareaType::class, ['label'=>'Description of the item:', 'data' => $description1])
+            ->add ('category', EntityType::class, [
+                'class'=> Category::class,
+                'choice_label' => 'name',
+                'label' => 'Choose category:',
+                'data' => $category1 
+                ])
+        
+            ->add('image', FileType::class, ['label' => 'Image of the Product (JPG or PNG file):' ,
+                                            'required' => false, 
+                                            'attr' => array('accept'=> 'image/png, image/jpeg'),
+                                               ]  )
+
+            ->add('delimage', CheckboxType::class, ['label'=> 'Delete all images:',
+                                                        'required' => false,   ])
+
+            ->add('save', SubmitType::class, ['label'=> 'Save changes'])
+            ->getForm();*/
            
         $form2 = $this->createFormBuilder()
             ->add('send', SubmitType::class, ['label'=>'Delete the item!!'])
@@ -72,22 +110,29 @@ class ProductEditController extends AbstractController
             $save='saved';
             
             $image = $product->getImage();
-            
-            if ($image) {
-                                
-                $imageName = $this->generateUniqueImageName().'.'.$image->guessExtension();
-                 
-                $image->move(
-                    $this->getParameter('images_directory'),
-                    $imageName
-                    );
+            $checkbox = $form1->get('delimage')->getData();
 
-                $product->setImage($imageName);
-            }
-            else {
-                $product->setImage($image1);
-            }
+            if ($checkbox) {
 
+                $product->setImage(null);
+
+            }   
+            else {    
+                if ($image) {
+                                    
+                    $imageName = $this->generateUniqueImageName().'.'.$image->guessExtension();
+                    
+                    $image->move(
+                        $this->getParameter('images_directory'),
+                        $imageName
+                        );
+
+                    $product->setImage($imageName);
+                }
+                else {
+                    $product->setImage($image1);
+                }
+            }
             $productManager->flush();
                                       
             $contents = $this->renderView('productedit/index.html.twig',
@@ -98,6 +143,7 @@ class ProductEditController extends AbstractController
                     'name1'=> $name1,
                     'price1'=> $price1,
                     'description1'=> $description1,
+                    'category1' => $category1,
                     'image1' => $image1,
                     'product' => $product,
                     'save'=>$save,
@@ -121,6 +167,7 @@ class ProductEditController extends AbstractController
                         'name1'=> $name1,
                         'price1'=> $price1,
                         'description1'=> $description1,
+                        'category1' => $category1,
                         'image1' => $image1,
                         'product' => $product,
                         'quantity'=>$this->session->get($id, 0),
