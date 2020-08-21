@@ -15,24 +15,28 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        edit:
-            pattern: ^/products/edit/
-            provider: app_user_provider
-            http_basic:
-                realm: Secured Area
-            logout:
-                path: app_logout
-                target: products
+      #  edit:
+       #     pattern: ^/products/edit/
+        #    provider: app_user_provider
+         #   http_basic:
+          #      realm: Secured Area
                
-                
-                
-        
         main:
             
             anonymous: true
             lazy: true
             provider: app_user_provider
-           
+            
+        
+           # pattern: ^/products/edit/
+        
+            form_login:
+                login_path: login
+                check_path: login
+
+            logout:
+                path:  logout
+                target: products
         
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -43,5 +47,5 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+         - { path: ^/products/edit, roles: ROLE_ADMIN }
+         - { path: ^/categories, roles: ROLE_USER }
