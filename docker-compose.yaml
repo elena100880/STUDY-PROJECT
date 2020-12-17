@@ -2,7 +2,7 @@ version: '3'
 
 services:
   web:
-    image: php:7.4-apache-xdebug
+    image: php:8.0-apache-xdebug
     ports:
       - 80:80
     volumes:
