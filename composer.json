@@ -82,8 +82,8 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
-            "require": "5.2.*"            
+            "allow-contrib": true,
+            "require": "5.2.*"
         },
         "public-dir": "html"
     }
