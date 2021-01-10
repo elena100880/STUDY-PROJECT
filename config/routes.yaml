@@ -17,9 +17,9 @@ product:
             path: /product/{id}
             controller: App\Controller\ProductsController::product
 
-registtest:
-            path: /registtest
-            controller: App\Controller\RegistTestController::registtest          
+test:
+            path: /test
+            controller: App\Controller\TestController::test          
 
 product_add:
             path: /products/add
@@ -58,13 +58,13 @@ product_fromcart:
             path: /product/cart_delete/{id}
             controller: App\Controller\ProductToCartController::product_fromcart
 
-login:
-            path: /login
-            controller: App\Controller\SecurityController::login
-            methods: GET|POST
+#login:
+#            path: /login
+#            controller: App\Controller\SecurityController::login
+#            methods: GET|POST
 
-logout:
-                path: /logout
-                methods: GET
+#logout:
+#                path: /logout
+#                methods: GET
 
             
