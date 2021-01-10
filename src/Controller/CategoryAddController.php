@@ -20,19 +20,29 @@ class CategoryAddController extends AbstractController
     public function categoryadd (Request $request, $id)
     {
         $categoryManager = $this->getDoctrine()->getManager();
+        $category = new Category();
+
+        //  version with representation of the category with the given id as a parent category:
         
-        $category = new Category();      
-        if ($id>0) {
-            $categoryParent = $categoryManager->getRepository(Category::class)->find($id);
-            $category->setName($categoryParent->getName());
-            $category->setParent($categoryParent->getParent());
-        }
+            if ($id>0) {
+                $categoryParent = $categoryManager->getRepository(Category::class)->find($id);
+                $category->setName('');
+                $category->setParent($categoryParent);
+            }
+        
+
+        //  version with representation of the category with the given id as a child category:
+        /*
+           if ($id>0) {
+                $category = $categoryManager->getRepository(Category::class)->find($id);
+            }
+        */
         
         $form = $this->createForm (CategoryType::class, $category)
             ->add('save', SubmitType::class, ['label'=>'Add the category']);
          
         $form->handleRequest($request);
-        
+               
         if ($form->isSubmitted()) {
            
             $categoryManager->persist($category);
