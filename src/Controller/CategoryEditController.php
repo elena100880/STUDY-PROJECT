@@ -22,7 +22,6 @@ class CategoryEditController extends AbstractController
         $categoryManager = $this->getDoctrine()->getManager();
         $category = $categoryManager->getRepository(Category::class)->find($id);
 
-        $id=$category->getId();
         $childCategories=$category->getChildCategories();
         
         $form1 = $this->createForm (CategoryType::class, $category)
@@ -35,7 +34,7 @@ class CategoryEditController extends AbstractController
             $categoryManager->flush();
         }
        
-        $contents = $this->renderView('categoryedit/index.html.twig',
+        $contents = $this->renderView('category_edit/category_edit.html.twig',
              [
                 'form1' => $form1->createView(),
                 'id'=> $id,

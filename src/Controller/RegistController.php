@@ -30,7 +30,7 @@ class RegistController extends AbstractController
             ->add('Enter_your_password:', PasswordType::class)
             ->add('Repeat_password:', PasswordType::class)
             ->add('SEND', SubmitType::class)
-            ->add('RESET', SubmitType::class)
+            ->add('RESET', ResetType::class)
             ->getForm();
 
         $form->handleRequest($request);
@@ -41,7 +41,7 @@ class RegistController extends AbstractController
 
             if ($data['Enter_your_password:']!=$data['Repeat_password:']) {
                 $message='Enter equal passwords';      
-                $contents = $this->renderView('registration/index.html.twig',
+                $contents = $this->renderView('registration/registration.html.twig',
                     [
                         'data'=> $data,
                         'form' => $form->createView(),
@@ -51,7 +51,7 @@ class RegistController extends AbstractController
             }
             else {
                 $message='OK';      
-                $contents = $this->renderView('registration/index.html.twig',
+                $contents = $this->renderView('registration/registration.html.twig',
                     [
                         'data'=> $data,
                         'form' => $form->createView(),
@@ -63,9 +63,9 @@ class RegistController extends AbstractController
         }
         else {
             $message="";
-            $contents = $this->renderView('registration/index.html.twig',
+            $contents = $this->renderView('registration/registration.html.twig',
                 [
-                     'form' => $form->createView(),
+                    'form' => $form->createView(),
                     'message'=> $message
                 ],
             );

@@ -23,7 +23,7 @@ class CategoriesController extends AbstractController
                 ->getRepository(Category::class)
                 ->findAll();
            
-            $contents = $this->renderView('categories/index.html.twig',
+            $contents = $this->renderView('categories/categories.html.twig',
                 [
                     'categories' => $categories,
                 ],

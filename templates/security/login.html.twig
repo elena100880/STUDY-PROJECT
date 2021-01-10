@@ -1,12 +1,8 @@
 {% extends 'base.html.twig' %}   
 
 {% block stylesheets1 %}
-            <link rel="stylesheet" href="/css/prod.css">
-           
+    <link rel="stylesheet" href="/css/login.css">
 {% endblock %}
-
-
-
 
 {% block content %}  
 
@@ -17,11 +13,15 @@
     {% endif %}
 
     <form action="{{ path('login') }}" method="post">
-        <label for="username">Email:</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}"/>
-    
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="_password"/>
+        <div>
+            <label for="username">Email:</label>
+            <input type="text" id="username" name="_username" value="{{ last_username }}"/>
+        </div>
+        
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="_password"/>
+        </div>
     
         {#
             If you want to control the URL the user
@@ -31,8 +31,5 @@
     
         <button type="submit">login</button>
     </form>
-
-
-
     
 {% endblock %}

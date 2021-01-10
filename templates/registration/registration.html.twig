@@ -1,8 +1,7 @@
 {% extends 'base.html.twig' %}   
 
 {% block stylesheets1 %}
-            <link rel="stylesheet" href="/css/reg.css">
-           
+    <link rel="stylesheet" href="/css/registration.css">
 {% endblock %}
 
 {% block content %}  
@@ -10,20 +9,14 @@
     <h1>USER's REGISTRATION</h1>      
 
     {{form(form)}}
-   
     <br>
+
     <div id="message">
         {{message}}
     </div>
     
     {% if data is defined %}
-        <p>  {{data['Enter_your_password:']}}
-        </p>
+        <p>{{data['Enter_your_password:']}}</p>
     {% endif %}
-   
-   
-   
-
-
 
 {% endblock %}

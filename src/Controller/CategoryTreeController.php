@@ -33,7 +33,7 @@ class CategoryTreeController extends AbstractController
 
         $names=getTree ($category, "");
         
-        $contents = $this->renderView('categorytree/index.html.twig',
+        $contents = $this->renderView('category_tree/category_tree.html.twig',
             [   'names' => $names,
                 ]);
         return new Response($contents);

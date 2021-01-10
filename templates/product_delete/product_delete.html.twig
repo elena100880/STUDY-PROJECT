@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}   
+
+{% block stylesheets1 %}
+    <link rel="stylesheet" href="/css/product.css">
+{% endblock %}
+
+{% block content %}  
+
+    <h1>ITEM's INFORMATION</h1>      
+
+    {{product.id}}. {{product.name}} - {{product.price}}$ ({{product.description}})
+    
+{% endblock %}

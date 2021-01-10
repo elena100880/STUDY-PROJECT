@@ -13,7 +13,7 @@ class LuckyController extends AbstractController
         
         $number = random_int(0, 100);
        
-        $contents = $this->renderView('lucky/index.html.twig',
+        $contents = $this->renderView('lucky/lucky.html.twig',
        
             [
                 'random_strings' => ['ala', 'ma','kot', 'pies'],

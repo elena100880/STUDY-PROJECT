@@ -42,7 +42,7 @@ class CategoryAddController extends AbstractController
         }
         else 
         {
-            $contents = $this->renderView('categoryadd/index.html.twig',
+            $contents = $this->renderView('category_add/category_add.html.twig',
                     [
                         'form' => $form->createView(),
                     ],

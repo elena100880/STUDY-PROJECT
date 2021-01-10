@@ -13,9 +13,9 @@ use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\EntityManagerInterface;
 
-class RegistTestController extends AbstractController
+class TestController extends AbstractController
 {
-    public function registtest (Request $request)
+    public function test (Request $request)
     {
         $form = $this->createFormBuilder()
             
@@ -34,7 +34,7 @@ class RegistTestController extends AbstractController
                 ->getRepository(Product::class)
                 ->findBy (['price' => $price ]);
                       
-            $contents = $this->renderView('registtest/index.html.twig',
+            $contents = $this->renderView('test/test.html.twig',
                 [
                     'form' => $form->createView(),
                     'product' => $product,
@@ -43,10 +43,9 @@ class RegistTestController extends AbstractController
         }
         else {
            
-            $contents = $this->renderView('registtest/index.html.twig',
+            $contents = $this->renderView('test/test.html.twig',
                 [
                     'form' => $form->createView(),
-                    
                 ],
             );
         }

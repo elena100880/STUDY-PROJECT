@@ -105,27 +105,33 @@ class ProductsController extends AbstractController
 
 
 
-            /*$products = $this->getDoctrine()
-                ->getRepository(Product::class)
-                ->findBy(['price' => $price,
-                        'name' => $name,
-                        ]);*/
-            
-        /*    $productsFilter = Array();
-            $i=0;
-            foreach ($products as $prod) {
-                
-                foreach ($category as $cat) {
+            /* my first queries to database from Form:
                     
-                    if ($prod ->getCategory()-> getId() == $cat->getId() ) {
-                           
-                        $productsFilter[$i]=$prod;
-                        $i=$i+1;
+                    $products = $this->getDoctrine()
+                    ->getRepository(Product::class)
+                    ->findBy(['price' => $price,
+                            'name' => $name,
+                            ]);
+            */
+            
+            /*    
+                $productsFilter = Array();
+                $i=0;
+                foreach ($products as $prod) {
+                    
+                    foreach ($category as $cat) {
+                        
+                        if ($prod ->getCategory()-> getId() == $cat->getId() ) {
+                            
+                            $productsFilter[$i]=$prod;
+                            $i=$i+1;
+                        }
                     }
                 }
-            }
-            $products=$productsFilter;  */
-            $contents = $this->renderView('products/index.html.twig',
+                $products=$productsFilter;  
+            */
+
+            $contents = $this->renderView('products/products.html.twig',
                 [
                     'kot' => $kot->createView(),
                     'products' => $products,
@@ -142,7 +148,7 @@ class ProductsController extends AbstractController
                 ->getRepository(Product::class)
                 ->findAll();
            
-            $contents = $this->renderView('products/index.html.twig',
+            $contents = $this->renderView('products/products.html.twig',
                 [
                     'kot' => $kot->createView(),
                     'products' => $products,
@@ -158,7 +164,7 @@ class ProductsController extends AbstractController
             ->getRepository(Product::class)
             ->find($id);
                
-        $contents = $this->renderView('product/index.html.twig',
+        $contents = $this->renderView('product/product.html.twig',
             [
                 'product' => $product,
             ],

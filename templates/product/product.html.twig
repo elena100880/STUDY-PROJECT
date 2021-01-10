@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}   
+
+{% block stylesheets1 %}
+    <link rel="stylesheet" href="/css/product.css">
+{% endblock %}
+
+{% block content %}  
+
+    <h1>ITEM's INFORMATION</h1>      
+
+    {{product.id}}. {{product.name}} - {{product.price}}$ ({{product.description}})<br>
+
+    {% if product.image != null %}
+        <img src="{{ asset('uploads/images/' ~ product.image) }}" alt="product">
+    {% else %}
+        <span id = "image">     < no image ></span>
+    {% endif %}
+    
+{% endblock %}

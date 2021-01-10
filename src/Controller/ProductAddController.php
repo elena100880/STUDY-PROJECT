@@ -45,7 +45,7 @@ class ProductAddController extends AbstractController
             
                 // $image сохраняет загруженный PDF файл
                 //   /** @var Symfony\Component\HttpFoundation\File\UploadedFile $image */
-            //$image = $product->getImage();
+                //$image = $product->getImage();
             $image = $form->get('image')->getData();
             
                 // this condition is needed because the 'image' field is not required, so the  file must be processed only when a file is uploaded
@@ -80,7 +80,7 @@ class ProductAddController extends AbstractController
         }
         else 
         {
-            $contents = $this->renderView('productadd/index.html.twig',
+            $contents = $this->renderView('product_add/product_add.html.twig',
                     [
                         'form' => $form->createView(),
                     ],

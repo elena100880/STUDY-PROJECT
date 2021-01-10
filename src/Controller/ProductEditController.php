@@ -39,8 +39,6 @@ class ProductEditController extends AbstractController
         $this->session = $session;
     }
 
-    
-
     public function productedit (Request $request, $id)
     {
         $productManager = $this->getDoctrine()->getManager();
@@ -59,7 +57,6 @@ class ProductEditController extends AbstractController
             );
         }
 
-
         $form1 = $this->createForm (ProductType::class, $product)
             ->add('image', FileType::class, ['label' => 'Image of the Product (JPG or PNG file):' ,
                                             'required' => false, 
@@ -73,7 +70,8 @@ class ProductEditController extends AbstractController
 
             ->add('save', SubmitType::class, ['label'=> 'Save changes']);
        
-        /*$this->createFormBuilder()
+        /*
+            $this->createFormBuilder()
             ->add('name', TextType::class, ['label'=>'Name:', 'data' => $name1])
             ->add('price', NumberType::class, ['label'=>'Price in $:', 'data' => $price1])
             ->add('description', TextareaType::class, ['label'=>'Description of the item:', 'data' => $description1])
@@ -93,7 +91,8 @@ class ProductEditController extends AbstractController
                                                         'required' => false,   ])
 
             ->add('save', SubmitType::class, ['label'=> 'Save changes'])
-            ->getForm();*/
+            ->getForm();
+        */
            
         $form2 = $this->createFormBuilder()
             ->add('send', SubmitType::class, ['label'=>'Delete the item!!'])
@@ -135,7 +134,7 @@ class ProductEditController extends AbstractController
             }
             $productManager->flush();
                                       
-            $contents = $this->renderView('productedit/index.html.twig',
+            $contents = $this->renderView('product_edit/product_edit.html.twig',
                 [
                     'form1' => $form1->createView(),
                     'form2' => $form2->createView(),
@@ -159,7 +158,7 @@ class ProductEditController extends AbstractController
         }
         else 
         {
-            $contents = $this->renderView('productedit/index.html.twig',
+            $contents = $this->renderView('product_edit/product_edit.html.twig',
                     [
                         'form1' => $form1->createView(),
                         'form2' => $form2->createView(),
