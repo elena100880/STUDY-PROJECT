@@ -20,8 +20,8 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ProductAddController extends AbstractController
 {
+    // slugger for version 2:
     private $slugger;
-
     public function __construct(SluggerInterface $slugger)
     {
         $this->slugger = $slugger;
@@ -43,29 +43,29 @@ class ProductAddController extends AbstractController
 
         if ($form->isSubmitted()) {
             
-                // $image сохраняет загруженный PDF файл
-                //   /** @var Symfony\Component\HttpFoundation\File\UploadedFile $image */
-                //$image = $product->getImage();
+        // $image сохраняет загруженный PDF файл
+        //   /** @var Symfony\Component\HttpFoundation\File\UploadedFile $image */
+
+            //for version 1: $image = $product->getImage();
             $image = $form->get('image')->getData();
             
-                // this condition is needed because the 'image' field is not required, so the  file must be processed only when a file is uploaded
+        // this condition is needed because the 'image' field is not required, so the  file must be processed only when a file is uploaded
             if ($image) {
-                // this is needed to safely include the file name as part of the URL
+        
+        // this is needed to safely include the file name as part of the URL:
                 
-                //$imageName = $this->generateUniqueImageName().'.'.$image->guessExtension();
+                //for version 1: $newImageName = $this->generateUniqueImageName().'.'.$image->guessExtension();
                 $originalImageName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
-
                 $safeImageName = $slugger->slug($originalImageName);
-
                 $newImageName = $safeImageName.'-'.uniqid().'.'.$image->guessExtension();
                 
-                    // Move the file to the directory where images are stored
+        // Move the file to the directory where images are stored
                 $image->move(
                     $this->getParameter('images_directory'),
                     $newImageName
                 );
 
-                    // обновляет свойство 'image', чтобы сохранить имя файла PDF вместо его содержаиия
+        // обновляет свойство 'image', чтобы сохранить имя файла PDF вместо его содержаиия
                 $product->setImage($newImageName);
             }
             
@@ -73,10 +73,7 @@ class ProductAddController extends AbstractController
             $productManager->persist($product);
             $productManager->flush();
             
-          //  $id=$product->getId();
-                          
             return $this->redirectToRoute('products');
-            
         }
         else 
         {
@@ -90,6 +87,7 @@ class ProductAddController extends AbstractController
         
     }
 
+    // function for version 1:
     private function generateUniqueImageName()
     {
         // md5() уменьшает схожесть имён файлов, сгенерированных
@@ -97,5 +95,4 @@ class ProductAddController extends AbstractController
         return md5(uniqid());
     }
 
-   
 }

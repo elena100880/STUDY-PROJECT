@@ -7,7 +7,7 @@
 {% block content %}  
     <h1>LIST OF ITEMS</h1>         
 
-    {{form(kot)}}
+    {{form(form)}}
 
    <button type="button"><a class="button" href="{{ path('products') }}">Show all items</a></button>
 
@@ -25,8 +25,8 @@
                 
                     <tr>
                         <td> {{item.name}} </td><td> {{item.price}}</td><td> {{item.category.name}} </td>
-                        <td><a href="{{ path('product', {id: item.id}) }}">go to the item</a></td>
-                        <td><a href="{{ path('product_edit', {id: item.id}) }}">change the itemm</a></td>
+                        <td><a target="_blanc" href="{{ path('product', {id: item.id}) }}">go to the item</a></td>
+                        <td><a target="_blanc" href="{{ path('product_edit', {id: item.id}) }}">change the itemm</a></td>
                     </tr>
                     
                 {% endfor %}   
@@ -35,9 +35,10 @@
         {% endif %}  
 
         {% if sql is defined %}
-          {{sql}}<br><br>
-          {{dql}}<br><br>
-          {{param}}
+        Developer information:<br>
+          SQL:<br> {{sql}}<br><br>
+          DQL:<br> {{dql}}<br><br>
+          {{params}}
          
         {% endif %}  
 {% endblock %}

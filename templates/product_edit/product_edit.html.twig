@@ -29,14 +29,6 @@
         
     {{form(form2)}}
     
-    <a class="button" href="{{ path('product_tocart', {id: id}) }}"><span class="plus"> + </span></a>
-    
-    <span style = "font-size:40px; white-space: pre; ">    {{quantity}} product/s in cart    </span>
-   
-    {% if quantity is defined and quantity != null %} 
-            <a class="button" href="{{ path('product_fromcart', {id: id}) }}"><span class="plus">  &#8722  </span></a><br>
-    {% endif %}
-    
     <br><br>
     {% if save is defined%}
 
@@ -47,11 +39,11 @@
             new Price: {{product.price}}<br>
             new Description: {{product.description}}<br>
             new Category: {{product.category.name}}<br>
+            
             {% if  product.image != null %}
                 new Image:  <a href="{{ asset('uploads/images/' ~ product.image) }}"><img src="{{ asset('uploads/images/' ~ product.image) }}" alt="product"></a> 
-            
             {% else %}
-                <span class = "image">     < no image ></span>
+                <span class = "image">     < no image ></span><br>
             {% endif %}
     
      {#   {% elseif save == "deleted" %}
@@ -62,4 +54,14 @@
 
         {% endif %}
     {% endif %}
+
+    <a class="button" href="{{ path('product_tocart', {id: id}) }}"><span class="plus"> + </span></a>
+    
+    <span style = "font-size:40px; white-space: pre; ">    {{quantity}} product/s in cart    </span>
+
+    {% if quantity is defined and quantity != null %} 
+        <a class="button" href="{{ path('product_fromcart', {id: id}) }}"><span class="plus">  &#8722  </span></a><br>
+    {% endif %}
+
+
 {% endblock %}

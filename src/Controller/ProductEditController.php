@@ -44,7 +44,7 @@ class ProductEditController extends AbstractController
         $productManager = $this->getDoctrine()->getManager();
         $product = $productManager->getRepository(Product::class)->find($id);
 
-        $id=$product->getId();
+        //$id=$product->getId();
         $name1=$product->getName();
         $price1=$product->getPrice();
         $description1=$product->getDescription();
@@ -103,7 +103,6 @@ class ProductEditController extends AbstractController
 
         //$quantity=$this->session->get($id);
         //$this->session->set('quantity', $quantity);
-
 
         if ($form1->isSubmitted()) {
             $save='saved';

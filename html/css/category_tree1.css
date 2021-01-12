@@ -6,8 +6,11 @@
 	padding-bottom: 15px;
 	text-align: left;
 }
-span {
+span#list {
 	color: red;
 	font-size: 25px;
 	font-weight: bold;
+}
+span#category {
+	color: green;
 }

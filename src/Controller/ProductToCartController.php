@@ -27,10 +27,7 @@ class ProductToCartController extends AbstractController
     
     public function product_tocart ($id)
     {
-        $productManager = $this->getDoctrine()->getManager();
-        $product = $productManager->getRepository(Product::class)->find($id);
-
-        $id_incart=$product->getId();
+        $id_incart=$id;
                
         if ($this->session->get($id_incart) != null ) {
             
@@ -46,9 +43,7 @@ class ProductToCartController extends AbstractController
 
     public function product_fromcart ($id)
     {
-        $productManager = $this->getDoctrine()->getManager();
-        $product = $productManager->getRepository(Product::class)->find($id);
-        $id_incart=$product->getId();
+        $id_incart=$id;
 
         if ($this->session->get($id_incart) != 0 ) {
             

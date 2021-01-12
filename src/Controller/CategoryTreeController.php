@@ -17,24 +17,42 @@ class CategoryTreeController extends AbstractController
         $categoryManager = $this->getDoctrine()->getManager();
         $category = $categoryManager->getRepository(Category::class)->find($id);
         
+        //my very first version:
+        /*    
+                function getTree ($child) {
+                    
+                    $names= Array($child->getName());  
+                    
+                    $childs=$child->getChildCategories(); 
+
+                    if ( !empty($childs) ){
+                        
+                        foreach ($childs as $child) {
+                            $names=array_merge ($names, getTree ($child));
+
+                        }
+                    }  
+                    return $names;
+                }  
+         */  
+        
+        //final version:
         function getTree ($child, $i) {
             
-            $names= Array($i.$child->getName());  
+            $names= Array($i.$child->getName() );  
             $childs=$child->getChildCategories(); 
             
-           // if ( !empty($childs) ){
-                //$i=$i."++";       
             foreach ($childs as $child) {
-                $names=array_merge ($names, getTree ($child, $i."++"));
+                $names=array_merge ($names, getTree ($child, $i."++" ) );
             }
-            //}  
             return $names;
         } 
 
-        $names=getTree ($category, "");
+    $names=getTree ($category, "");
         
         $contents = $this->renderView('category_tree/category_tree.html.twig',
             [   'names' => $names,
+                'id' => $id,
                 ]);
         return new Response($contents);
     }

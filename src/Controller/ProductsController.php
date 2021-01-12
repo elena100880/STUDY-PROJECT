@@ -22,7 +22,7 @@ class ProductsController extends AbstractController
 {
     public function products (Request $request)
     {
-        $kot = $this->createFormBuilder()
+        $form = $this->createFormBuilder()
             ->setMethod('GET')
             ->add('name', TextType::class, ['label'=>'Name:',
                                             'required' => false])
@@ -36,109 +36,100 @@ class ProductsController extends AbstractController
                 'label' => 'Choose category:',
                 'multiple' => true, 
                 'required' => false,
-                //'attr' => array('placeholder' => '') 
                 ])
             ->add('send', SubmitType::class, ['label'=>'Show the chosen'])
             ->getForm();
 
-        $kot->handleRequest($request);
+        $form->handleRequest($request);
 
-        if ($kot->isSubmitted()) {
+        if ($form->isSubmitted()) {
             
-            $data = $kot->getData();
+            $data = $form->getData();
             $price_min=$data['price_min'];
             $price_max=$data['price_max'];
             $name=$data['name'];
             $categories=$data['category'];
            
+        // array of all id of selected categories: 
             function getAllId ($categories) {
                 
                 $all_id= Array();
 
-                foreach ($categories as $cat) {
+                foreach ($categories as $category) {
                    
-                    array_push ($all_id, $cat->getId() );
-                    $childs=$cat->getChildCategories(); 
+                    array_push ($all_id, $category->getId() );
+                    $childs=$category->getChildCategories(); 
                                             
                     $all_id=array_merge ($all_id, getAllId($childs));
                    
                 }             
                 return $all_id;
             } 
-    
             $all_id=getAllId ($categories);
 
-            //$qb = $this->getDoctrine()->getRepository(Product::class)->createQueryBuilder('p')
-                $em = $this->getDoctrine()->getManager();
-                $qb = $em->createQueryBuilder()
-                        -> select('p, c')
-                        -> from ('App\Entity\Product', 'p')
-                        -> join ('p.category', 'c')
-                        -> orderBy('p.price', 'DESC');
+        // another variant: $qb = $this->getDoctrine()->getRepository(Product::class)->createQueryBuilder()->createQueryBuilder('p')
+            $entityManager = $this->getDoctrine()->getManager();
+            $queryBuilder = $entityManager->createQueryBuilder()
+                                            -> select('p, c')
+                                            -> from ('App\Entity\Product', 'p')
+                                            -> join ('p.category', 'c')
+                                            -> orderBy('p.price', 'DESC');
 
-                if (isset($name)) {
-                    $qb= $qb-> setParameter('name', $name)
-                            -> andWhere('p.name = :name');
-                }            
-                if (isset($price_max)) {
-                    $qb= $qb-> setParameter('price_max', $price_max)
-                            -> andWhere('p.price <= :price_max');
-                }        
-                if (isset($price_min)) {
-                    $qb= $qb-> setParameter('price_min', $price_min)
-                            -> andWhere('p.price >=:price_min');
-                }  
-                if (!empty($all_id)) {
-                    $qb= $qb-> setParameter('all_id', $all_id)
-                            -> andWhere('c.id in (:all_id)');
-                }              
+            if (isset($name)) {
+                $queryBuilder= $queryBuilder->setParameter('name', $name)
+                                            -> andWhere('p.name = :name');
+            }            
+            if (isset($price_max)) {
+                $queryBuilder= $queryBuilder->setParameter('price_max', $price_max)
+                                            -> andWhere('p.price <= :price_max');
+            }        
+            if (isset($price_min)) {
+                $queryBuilder= $queryBuilder->setParameter('price_min', $price_min)
+                                            -> andWhere('p.price >=:price_min');
+            }  
+            if (!empty($all_id)) {
+                $queryBuilder= $queryBuilder-> setParameter('all_id', $all_id)
+                                            -> andWhere('c.id in (:all_id)');
+            }              
                 
-                $dql=$qb->getDQL();
+            $query=$queryBuilder->getQuery();
+            $sql=$query->getSQL();
+            $dql=$queryBuilder->getDQL();
+            $params=$query->getParameters();
 
-                $q=$qb->getQuery();
-                $sql=$q->getSQL();
-                $param=$q->getParameters();
+            $products = $queryBuilder->getQuery()->getResult();
 
-               
-                //$param=$q->getParameters();
-                $products = $qb->getQuery() -> getResult();
-
-
-
-            /* my first queries to database from Form:
+            /* my first queries to database - sort by name/price/category:
                     
                     $products = $this->getDoctrine()
                     ->getRepository(Product::class)
                     ->findBy(['price' => $price,
                             'name' => $name,
                             ]);
-            */
-            
-            /*    
-                $productsFilter = Array();
-                $i=0;
-                foreach ($products as $prod) {
-                    
-                    foreach ($category as $cat) {
+             
+                    $productsFilter = Array();
+                    $i=0;
+                    foreach ($products as $prod) {
                         
-                        if ($prod ->getCategory()-> getId() == $cat->getId() ) {
+                        foreach ($category as $cat) {
                             
-                            $productsFilter[$i]=$prod;
-                            $i=$i+1;
+                            if ($prod ->getCategory()-> getId() == $cat->getId() ) {
+                                
+                                $productsFilter[$i]=$prod;
+                                $i=$i+1;
+                            }
                         }
                     }
-                }
-                $products=$productsFilter;  
+                    $products=$productsFilter;  
             */
 
             $contents = $this->renderView('products/products.html.twig',
                 [
-                    'kot' => $kot->createView(),
+                    'form' => $form->createView(),
                     'products' => $products,
                     'sql' => $sql,
                     'dql' => $dql,
-                    'param' => $param
-                    //'category' =>$category,
+                    'params' => $params
                 ],
             );               
         }
@@ -150,7 +141,7 @@ class ProductsController extends AbstractController
            
             $contents = $this->renderView('products/products.html.twig',
                 [
-                    'kot' => $kot->createView(),
+                    'form' => $form->createView(),
                     'products' => $products,
                 ],
             );    

@@ -1,17 +1,26 @@
 {% extends 'base.html.twig' %}   
 
 {% block stylesheets1 %}
-    <link rel="stylesheet" href="/css/category_tree.css">
+    <link rel="stylesheet" href="/css/category_tree1.css">
 {% endblock %}
 
 {% block content %}  
     <h1>LIST OF CHILDS</h1>         
     
-    <span>List of child categories:</span><br>
-
+    
+   
     {% for name in names %} 
         
-        {{name}}<br>
-    
-    {% endfor %}  
+        {% if name == names[0] %}
+            <span id="list">List of child categories of <span id="category">{{name}}</span> (id={{id}}):</span><br>
+        {% else %}
+            &nbsp &nbsp {{name}}<br>
+        {% endif %}
+            
+    {% endfor %}
+
+    {% if names[1] is not defined %}
+        &nbsp &nbspno childes<br>
+    {% endif %}
+
 {% endblock %}
