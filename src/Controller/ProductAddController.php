@@ -43,9 +43,8 @@ class ProductAddController extends AbstractController
 
         if ($form->isSubmitted()) {
             
-        // $image сохраняет загруженный PDF файл
-        //   /** @var Symfony\Component\HttpFoundation\File\UploadedFile $image */
-
+        // $image saves pdf, not string
+        
             //for version 1: $image = $product->getImage();
             $image = $form->get('image')->getData();
             
@@ -65,7 +64,7 @@ class ProductAddController extends AbstractController
                     $newImageName
                 );
 
-        // обновляет свойство 'image', чтобы сохранить имя файла PDF вместо его содержаиия
+        // saves name of img, not pdf
                 $product->setImage($newImageName);
             }
             
