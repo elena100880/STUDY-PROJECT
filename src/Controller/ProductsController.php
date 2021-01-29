@@ -19,10 +19,19 @@ use Doctrine\ORM\EntityManagerInterface;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
 class ProductsController extends AbstractController
 {
+    private $session;
+    public function __construct(SessionInterface $session)
+    {
+        $this->session = $session;
+    }
+
     public function products (Request $request)
     {
+        
         $form = $this->createFormBuilder()
             ->setMethod('GET')
             ->add('name', TextType::class, ['label'=>'Name:',

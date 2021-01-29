@@ -27,10 +27,14 @@ security:
             form_login:
                 login_path: login
                 check_path: login
+                #use_referer: true
 
             logout:
                 path:  logout
-                target: login
+               # target: logout_custom
+                
+               
+                
         
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication

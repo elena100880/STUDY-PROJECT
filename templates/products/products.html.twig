@@ -5,6 +5,13 @@
 {% endblock %}
 
 {% block content %}  
+    
+{% if is_granted('ROLE_USER') %}
+    You're logged in!!  <a href="{{ path('logout', {'_target_path': '/products' }) }}">  LOG OUT >></a>
+{% else %}
+    You're not logged in!!  <a href="{{ path('login', {'_target_path': '/products' } ) }}">LOG IN >></a>
+{% endif %}
+
     <h1>LIST OF ITEMS</h1>         
 
     {{form(form)}}
@@ -25,8 +32,8 @@
                 
                     <tr>
                         <td> {{item.name}} </td><td> {{item.price}}</td><td> {{item.category.name}} </td>
-                        <td><a target="_blanc" href="{{ path('product', {id: item.id}) }}">go to the item</a></td>
-                        <td><a target="_blanc" href="{{ path('product_edit', {id: item.id}) }}">change the itemm</a></td>
+                        <td><a href="{{ path('product', {id: item.id} ) }}">go to the item</a></td>
+                        <td><a href="{{ path('product_edit', {id: item.id} ) }}">change the itemm</a></td>
                     </tr>
                     
                 {% endfor %}   
@@ -40,5 +47,7 @@
           DQL:<br> {{dql}}<br><br>
           {{params}}
          
-        {% endif %}  
+        {% endif %} 
+        
+    
 {% endblock %}
