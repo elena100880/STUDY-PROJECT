@@ -1,8 +1,9 @@
 ## STUDY PROJECT
 
-You can launch the project with `docker-compose up` command. 
+**Launch**:
 
-Then open http://localhost/index.php/"somr_route_path".
+You can launch the project with `docker-compose up` command. Then open http://localhost/index.php/"somr_route_path".
+
 
 **Credentionals**: 
 + login - 100880@gmail.com 
