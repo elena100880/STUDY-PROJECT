@@ -1,4 +1,5 @@
 ## STUDY PROJECT
+**Also see additional part INVOICE: https://github.com/elena100880/INVOICE-additional-part-of-study-project.**
 
 **Launch**:
 
