@@ -3,7 +3,7 @@
 
 **Launch with Docker in Linux**:
 
-After uploading the project and executing command composer install inside the project folder You can launch the project with `docker-compose up` command in **Linux bash**. Then open http://localhost/index.php/"route_path.
+After uploading the project and executing command composer install inside the project folder You can launch the project with `docker-compose up` command in **Linux bash**. Then open http://localhost/index.php/<route_path>.
 
 
 ***
@@ -24,10 +24,26 @@ Execute the following commands:
 ***
 **DataBase**
 
-As there is a plain functional without pages for Adding/Editing such entities as Position/Supplier/Recipient - **/var/data.db** file with filled example-tables of positions/suppliers/recipients are added to the repository.
+For easy using  **/var/data.db** file is added to the repository.
 
 ***
 **Pages:**
+
++ **https://localhost/index.php/products** - list and filter for **products** in the shop with links to pages:
+  * view a particular product - **https://localhost/index.php/product/{id}**;
+  * add a product - **https://localhost/index.php/product/add**;
+  * editing and deleting a particular product and **adding a product to cart** - **https://localhost/index.php/product/edit/{id}**;
+  
++ **https://localhost/index.php/categories**  - list of **categories** of the products with links to:
+  * editing a particular category- **https://localhost/index.php/category/edit/{id}** with links to:
+    * adding a category - **https://localhost/index.php/category/add** ;
+  
++ **https://localhost/index.php/category/tree/{id}** - tree of categories (parent-child tree), recursion used;
+  
++ **logging in** is customised to stay in the previous page;
+
+
+
 
 ***
 **Credentials**: 
