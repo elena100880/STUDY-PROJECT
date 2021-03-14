@@ -1,7 +1,7 @@
 ## STUDY PROJECT
 **Also see additional part INVOICE: https://github.com/elena100880/INVOICE-additional-part-of-study-project.**
 
-**Launch**:
+**Launch with Docker in Linux**:
 
 After uploading the project and executing command composer install inside the project folder You can launch the project with `docker-compose up` command in **Linux bash**. Then open http://localhost/index.php/"route_path.
 
