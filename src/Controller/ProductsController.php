@@ -5,17 +5,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 
 use App\Entity\Product;
 use App\Entity\Category;
-use App\Repository\ProductRepository;
-use App\Repository\CategoryRepository;
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\EntityManagerInterface;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
@@ -68,7 +63,7 @@ class ProductsController extends AbstractController
                 foreach ($categories as $category) {
                    
                     array_push ($all_id, $category->getId() );
-                    $childs=$category->getChildCategories(); 
+                    $childs = $category->getChildCategories();
                                             
                     $all_id=array_merge ($all_id, getAllId($childs));
                    

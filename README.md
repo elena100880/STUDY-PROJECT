@@ -9,11 +9,11 @@ After uploading the project and executing command composer install inside the pr
 ***
 **Dockerfile**
 
-Docker-compose.yaml file in the project folder uses official image php:7.4-apache.
+Docker-compose.yaml file in the project folder uses an official image php:7.4-apache.
 
-Also you can use Dockerfile from rep: https://github.com/elena100880/dockerfile.
+Also, you can use Dockerfile from rep: https://github.com/elena100880/dockerfile.
 
-It includes php:8.0-apache oficial image (or you can change it to php:7.4-apache) and the installation of Composer, XDebug (customised for for VSC), Nano, some PHP and PECL extensions and enabling using mod rewrite (so you can skip index.php in URLs).
+It includes php:8.0-apache official image (or you can change it to php:7.4-apache) and the installation of Composer, XDebug (customised for VSC), Nano, some PHP and PECL extensions and enabling using mod rewrite (so you can skip index.php in URLs).
 
 Execute the following commands:
 
@@ -30,8 +30,6 @@ As there is a plain functional without pages for Adding/Editing such entities as
 **Pages:**
 
 ***
-**Credentionals**: 
+**Credentials**: 
 + login - 100880@gmail.com 
 + password - 1008
-
-
