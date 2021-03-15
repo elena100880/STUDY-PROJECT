@@ -3,7 +3,14 @@
 
 **Launch with Docker in Linux**:
 
-After uploading the project and executing command composer install inside the project folder You can launch the project with `docker-compose up` command in **Linux bash**. Then open http://localhost/index.php/<route_path>.
+Execute commands:
++ `git clone https://github.com/elena100880/STUDY-PROJECT`
+
+in project folder:
++ `compose install`
++ `docker-compose up`
+
+Then open http://localhost/index.php/<route_path> in tour browser.
 
 
 ***
@@ -11,9 +18,9 @@ After uploading the project and executing command composer install inside the pr
 
 Docker-compose.yaml file in the project folder uses an official image php:7.4-apache.
 
-Also, you can use Dockerfile from rep: https://github.com/elena100880/dockerfile.
+Also, you can use my Dockerfile from rep: https://github.com/elena100880/dockerfile.
 
-It includes php:8.0-apache official image (or you can change it to php:7.4-apache) and the installation of Composer, XDebug (customised for VSC), Nano, some PHP and PECL extensions and enabling using mod rewrite (so you can skip index.php in URLs).
+It includes php:8.0-apache official image (or you can change it to php:7.4-apache) and the installation of Composer, XDebug for VSC, Nano, some PHP extensions and enabling using mod rewrite (so you can skip index.php in URLs).
 
 Execute the following commands:
 
@@ -24,7 +31,7 @@ Execute the following commands:
 ***
 **DataBase**
 
-For easy using  **/var/data.db** file is added to the repository.
+For easier using  **/var/data.db** file is added to the repository.
 
 ***
 **Pages:**

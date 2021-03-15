@@ -40,9 +40,9 @@ class CategoryTreeController extends AbstractController
         function getTree ($child, $i) {
             
             $names= Array($i.$child->getName() );  
-            $childs=$child->getChildCategories(); 
+            $children=$child->getChildCategories();
             
-            foreach ($childs as $child) {
+            foreach ($children as $child) {
                 $names=array_merge ($names, getTree ($child, $i."++" ) );
             }
             return $names;
