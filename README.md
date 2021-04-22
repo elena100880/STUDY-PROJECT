@@ -10,7 +10,7 @@ in project folder:
 + `compose install`
 + `docker-compose up`
 
-Then open http://localhost/index.php/<route_path> in your browser.
+Then open localhost/index.php/<route_path> in your browser.
 
 
 ***
@@ -36,16 +36,16 @@ For easier using  **/var/data.db** file is added to the repository.
 ***
 **Pages:**
 
-+ **https://localhost/index.php/products** - list and filter for **products** in the shop with links to pages:
-  * view a particular product - **https://localhost/index.php/product/{id}**;
-  * add a product - **https://localhost/index.php/product/add**;
-  * editing and deleting a particular product and **adding a product to cart** - **https://localhost/index.php/product/edit/{id}**;
++ **localhost/index.php/products** - list and filter for **products** in the shop with links to pages:
+  * view a particular product - **localhost/index.php/product/{id}**;
+  * add a product - **localhost/index.php/product/add**;
+  * editing and deleting a particular product and **adding a product to cart** - **localhost/index.php/product/edit/{id}**;
   
-+ **https://localhost/index.php/categories**  - list of **categories** of the products with links to:
-  * editing a particular category- **https://localhost/index.php/category/edit/{id}** with links to:
++ **localhost/index.php/categories**  - list of **categories** of the products with links to:
+  * editing a particular category- **localhost/index.php/category/edit/{id}** with links to:
     * adding a category - **https://localhost/index.php/category/add** ;
   
-+ **https://localhost/index.php/category/tree/{id}** - tree of categories (parent-child tree), recursion used;
++ **localhost/index.php/category/tree/{id}** - tree of categories (parent-child tree), recursion used;
   
 + **logging in** is customised to stay in the previous page;
 
