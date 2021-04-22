@@ -36,7 +36,7 @@ class CategoryTreeController extends AbstractController
                 }  
          */  
         
-        //final version:
+        //final version with recursion:
         function getTree ($child, $i) {
             
             $names= Array($i.$child->getName() );  

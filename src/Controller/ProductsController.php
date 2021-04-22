@@ -53,7 +53,7 @@ class ProductsController extends AbstractController
             $name=$data['name'];
             $categories=$data['category'];
            
-        // array of all id of selected categories: 
+        // array of all id of selected multiple categories, using recursion. It is for queryBuilder Select question.
             function getAllId ($categories) {
                 
                 $all_id= Array();
@@ -70,7 +70,7 @@ class ProductsController extends AbstractController
             } 
             $all_id=getAllId ($categories);
 
-        // another variant: $qb = $this->getDoctrine()->getRepository(Product::class)->createQueryBuilder()->createQueryBuilder('p')
+        // another variant: $qb = $this->getDoctrine()->getRepository(Product::class)->createQueryBuilder('p') and without ->select('p,c')?
             $entityManager = $this->getDoctrine()->getManager();
             $queryBuilder = $entityManager->createQueryBuilder()
                                             -> select('p, c')
@@ -95,12 +95,14 @@ class ProductsController extends AbstractController
                                             -> andWhere('c.id in (:all_id)');
             }              
                 
-            $query=$queryBuilder->getQuery();
-            $sql=$query->getSQL();
-            $dql=$queryBuilder->getDQL();
-            $params=$query->getParameters();
+            $query=$queryBuilder->getQuery(); //object 
+            $sql=$query->getSQL();  //raw SQL question
+            $params=$query->getParameters(); // parameters 
 
-            $products = $queryBuilder->getQuery()->getResult();
+            $dql=$queryBuilder->getDQL(); //DQL question
+            
+
+            $products = $query->getResult(); //array of objects for our SELECT question
 
             /* my first queries to database - sort by name/price/category:
                     

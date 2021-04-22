@@ -10,9 +10,9 @@ use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
+//this controller is for learnig forms, not for real registration
 class RegistController extends AbstractController
 {
-
     public function registration (Request $request)
     {
         //формирует конфиг внутри себя по переданным тобой вещам и возвращает форму

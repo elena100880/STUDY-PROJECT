@@ -5,7 +5,7 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-
+//first test Controller for learning purposes
 class LuckyController extends AbstractController
 {
     public function number()
@@ -28,3 +28,4 @@ class LuckyController extends AbstractController
      
    
 }
+

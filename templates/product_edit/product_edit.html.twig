@@ -15,10 +15,11 @@
     {{name1}} - {{price1}} ({{description1}}) <br>
     Category: {{category1.name}} <br>
     Image of the Product:<br>
-    {% if image1 != null %}
+    {% if image1 != null %}  
+    {# making the image as a link to open big image: #}
         <a href="{{ asset('uploads/images/' ~ image1) }}"><img src="{{ asset('uploads/images/' ~ image1) }}" alt="product"></a> 
               
-       {# <img src="{{ asset('uploads/images/' ~ image1) }}" alt="product"> #}
+       {# <img src="{{ asset('uploads/images/' ~ image1) }}" alt="product"> - just image, not link #}
 
     {% else %}
 

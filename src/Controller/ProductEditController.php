@@ -41,8 +41,6 @@ class ProductEditController extends AbstractController
 
     public function productedit (Request $request, $id)
     {
-       
-
         $productManager = $this->getDoctrine()->getManager();
         $product = $productManager->getRepository(Product::class)->find($id);
 

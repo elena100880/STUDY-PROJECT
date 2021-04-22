@@ -22,13 +22,13 @@ class CategoryAddController extends AbstractController
         $categoryManager = $this->getDoctrine()->getManager();
         $category = new Category();
 
-        //  version with representation of the category with the given id as a parent category:
+        //  version with representation of the category with the given id as a parent category (link from /category/edit page):
         
-            if ($id>0) {
-                $categoryParent = $categoryManager->getRepository(Category::class)->find($id);
-                $category->setName('');
-                $category->setParent($categoryParent);
-            }
+        if ($id>0) {
+            $categoryParent = $categoryManager->getRepository(Category::class)->find($id);
+            $category->setName('');
+            $category->setParent($categoryParent);
+        }
         
 
         //  version with representation of the category with the given id as a child category:
