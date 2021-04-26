@@ -50,6 +50,8 @@ category_tree:
             path: /category/tree/{id}
             controller: App\Controller\CategoryTreeController::categorytree
 
+
+
 product_tocart:
             path: /product/cart/{id}
             controller: App\Controller\ProductToCartController::product_tocart
@@ -57,6 +59,10 @@ product_tocart:
 product_fromcart:
             path: /product/cart_delete/{id}
             controller: App\Controller\ProductToCartController::product_fromcart
+
+cart_view:
+            path: /cart
+            controller: App\Controller\CartViewController::cartView
 
 login:
             path: /login
