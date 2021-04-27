@@ -31,12 +31,15 @@ class ProductToCartController extends AbstractController
         if ($this->session->get($id_incart) != null ) {
             
             $this->session->set($id_incart, $this->session->get($id_incart)+1);
-        
+            
+
         }
         else {
             $this->session->set($id_incart, 1);
         }
-        
+        $totalQuantityOfItemsInCart = $this->session->get('totalQuantity');
+        $this->session->set('totalQuantity', $totalQuantityOfItemsInCart + 1);
+
         $referer = $request->headers->get('referer');   
         return $this->redirect($referer);
     }
@@ -55,6 +58,9 @@ class ProductToCartController extends AbstractController
             
         }     
        
+        $totalQuantityOfItemsInCart = $this->session->get('totalQuantity');
+        $this->session->set('totalQuantity', $totalQuantityOfItemsInCart - 1);
+
         $referer = $request->headers->get('referer');   
         return $this->redirect($referer);
     }
@@ -62,7 +68,11 @@ class ProductToCartController extends AbstractController
     public function deleteWholeProductFromCart ($id)
     {        
         $id_incart=$id;
+        $removedQuantity = $this->session->get($id_incart);
         $this->session->remove($id_incart);
+
+        $totalQuantityOfItemsInCart = $this->session->get('totalQuantity');
+        $this->session->set('totalQuantity', $totalQuantityOfItemsInCart - $removedQuantity);
         
         return $this->redirectToRoute('cart_view', ['id' => $id]);
     }
