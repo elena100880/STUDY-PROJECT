@@ -23,27 +23,27 @@ class CartViewController extends AbstractController
         
     public function cartView(Request $request): Response
     {
-        
         $all=$this->session->all();
 
-        //$cartArray = array();
+        $totalQuantityOfItemsInCart = 0;
         $arrayOfOrderProductsObjectsInCart = array();
-        
         foreach ($all as $key=>$value) {
             
             if (is_integer($key)) {
                 
                 $orderProduct = new OrderProduct();
-
                 $orderProduct->setAmount($value);
-
                 $product=$this->getDoctrine()->getRepository(Product::class)->find($key);
                 $orderProduct->setProducts($product);
 
                 array_push($arrayOfOrderProductsObjectsInCart, $orderProduct);
 
+                $totalQuantityOfItemsInCart = $totalQuantityOfItemsInCart + $value;
+                
             }
         }
+        
+        $this->session->set('totalQuantity', $totalQuantityOfItemsInCart);
                 
         $contents = $this->renderView('cart_view/cart_view.html.twig',
                 [

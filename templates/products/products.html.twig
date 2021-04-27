@@ -5,12 +5,18 @@
 {% endblock %}
 
 {% block content %}  
-    
-{% if is_granted('ROLE_USER') %}
-    You're logged in!!  <a href="{{ path('logout', {'_target_path': '/products' }) }}">  LOG OUT >></a>
-{% else %}
-    You're not logged in!!  <a href="{{ path('login', {'_target_path': '/products' } ) }}">LOG IN >></a>
-{% endif %}
+
+<div class = 'links'>    
+    {% if is_granted('ROLE_USER') %}
+        You're logged in!!  <a href="{{ path('logout', {'_target_path': '/products' }) }}">  LOG OUT >></a>
+    {% else %}
+        You're not logged in!!  <a href="{{ path('login', {'_target_path': '/products' } ) }}">LOG IN >>  </a>
+    {% endif %}
+</div>
+<div class = 'cart'>
+    <a href="{{ path('cart_view') }}">  Your CART  >></a>
+</div>
+<div style = "clear:both"></div>
 
     <h1>LIST OF ITEMS</h1>         
 

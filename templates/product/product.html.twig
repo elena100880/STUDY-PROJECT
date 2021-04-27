@@ -6,6 +6,11 @@
 
 {% block content %}  
 
+    <div class = 'cart' align = 'right'>
+        <a href="{{ path('cart_view') }}">  Your CART  >></a>
+    </div>
+    
+
     <h1>ITEM's INFORMATION</h1>      
 
     {{product.id}}. {{product.name}} - {{product.price}}$ ({{product.description}})<br>

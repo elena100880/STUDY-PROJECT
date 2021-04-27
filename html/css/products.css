@@ -53,3 +53,11 @@ a.button {
 #addbutton {
 	margin-left: 200px;
 } 
+.links{
+	float: left;
+}
+.cart {
+	float: right;
+	padding-right: 10px;
+
+}

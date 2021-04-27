@@ -23,8 +23,7 @@ class ProductToCartController extends AbstractController
     {
         $this->session = $session;
     }
-       
-    
+        
     public function product_tocart (Request $request, $id)
     {
         $id_incart=$id;
