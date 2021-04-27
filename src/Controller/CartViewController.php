@@ -25,11 +25,12 @@ class CartViewController extends AbstractController
 
         $cartArray = array();
 
+        $_SESSION['4'];
+
         foreach ($all as $key=>$value) {
             
-            if (is_integer($key) and $value !==0){
-                
-                
+            if (is_integer($key)) {
+                           
                 
                 $cartArray[$key]=$value;
             }

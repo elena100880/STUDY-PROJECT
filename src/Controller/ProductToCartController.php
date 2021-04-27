@@ -46,10 +46,15 @@ class ProductToCartController extends AbstractController
     {
         $id_incart=$id;
 
-        if ($this->session->get($id_incart) != 0 ) {
+        if ($this->session->get($id_incart) > 1) {
             
             $this->session->set($id_incart, $this->session->get($id_incart)-1);
-        }       
+        }
+        else {
+            
+            $this->session->remove($id_incart);
+            //unset($_SESSION[$id_incart]) ;
+        }     
        
         $referer = $request->headers->get('referer');   
         return $this->redirect($referer);
