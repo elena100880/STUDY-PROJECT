@@ -15,5 +15,15 @@
     {% else %}
         <span id = "image">     < no image ></span>
     {% endif %}
+
+    <br><br>
+
+    <a class="button" href="{{ path('product_tocart', {id: id}) }}"><span class="plus"> + </span></a>
+    
+    <span style = "font-size:40px; white-space: pre; ">    {{quantity}} product/s in cart    </span>
+
+    {% if quantity is defined and quantity != null %} 
+        <a class="button" href="{{ path('product_fromcart', {id: id}) }}"><span class="plus">  &#8722  </span></a><br>
+    {% endif %}
     
 {% endblock %}

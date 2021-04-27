@@ -17,3 +17,14 @@ img {
 	color: grey; 
 	font-weight:normal
 }
+span {
+	color:red;
+	font-weight: bold;;
+}
+.plus {
+	font-size:40px;
+	color:blue;
+}
+a {
+	text-decoration: none;
+}

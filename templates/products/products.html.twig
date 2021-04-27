@@ -25,12 +25,13 @@
         {% else %}  
             <table>
                 <tr>
-                    <th>Name</th><th>Price</th><th>Category</th><th>Link to an item</th><th>Adding changes to an item</th>
+                    <th>ID</th><th>Name</th><th>Price</th><th>Category</th><th>Link to an item</th><th>Adding changes to an item</th>
                 </tr>
             
                 {% for item in products %}  
                 
                     <tr>
+                        <td>{{item.id}}</td>
                         <td> {{item.name}} </td><td> {{item.price}}</td><td> {{item.category.name}} </td>
                         <td><a href="{{ path('product', {id: item.id} ) }}">go to the item</a></td>
                         <td><a href="{{ path('product_edit', {id: item.id} ) }}">change the itemm</a></td>

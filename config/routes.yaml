@@ -60,6 +60,10 @@ product_fromcart:
             path: /product/cart_delete/{id}
             controller: App\Controller\ProductToCartController::product_fromcart
 
+delete_whole_product_from_cart:
+            path: /product/cart/delete/wholeproduct/{id}
+            controller: App\Controller\ProductToCartController::deleteWholeProductFromCart
+
 cart_view:
             path: /cart
             controller: App\Controller\CartViewController::cartView

@@ -11,20 +11,28 @@
     <table>
 
         <tr>
-            <th>SN</th>  <th>Product</th>  <th>Price</th>  <th>Quantity</th>  <th>Sum</th> <th> Delete the whole position </th> 
+            <th>SN</th>  <th>Product</th>  <th>Price</th> <th> - 1</th> <th>Quantity</th> <th> + 1</th> <th>Sum</th> <th> Delete the whole position </th> 
         </tr>
 
+        {% for id, quantity in cartArray %}   
         <tr>
 
             <td>  </td>
             <td>  </td>
             <td>  </td>
+            <td> <a class="button" href="{{ path('product_fromcart', {id: id}) }}"><span class="plus">  &#8722  </span></a><br> </td>
+
+            <td> {{quantity}} </td>
+
+            <td> <a class="button" href="{{ path('product_tocart', {id: id}) }}"><span class="plus"> + </span></a> </td>
+
             <td>  </td>
-            <td>  </td>
-            <td>  </td>
-            
+
+            <td> <a class="button" href="{{ path('delete_whole_product_from_cart',  {id: id}) }}"> <span class="plus"> &#x2718 </span> </a>   </td>
+
         </tr>
-    
+        {% endfor %}
+
     </table>
 
     <h4>Total sum: </h4> <br>

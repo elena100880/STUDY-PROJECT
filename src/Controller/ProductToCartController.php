@@ -25,7 +25,7 @@ class ProductToCartController extends AbstractController
     }
        
     
-    public function product_tocart ($id)
+    public function product_tocart (Request $request, $id)
     {
         $id_incart=$id;
                
@@ -37,11 +37,12 @@ class ProductToCartController extends AbstractController
         else {
             $this->session->set($id_incart, 1);
         }
-             
-        return $this->redirectToRoute('product_edit', ['id' => $id]);
+        
+        $referer = $request->headers->get('referer');   
+        return $this->redirect($referer);
     }
 
-    public function product_fromcart ($id)
+    public function product_fromcart (Request $request, $id)
     {
         $id_incart=$id;
 
@@ -50,11 +51,14 @@ class ProductToCartController extends AbstractController
             $this->session->set($id_incart, $this->session->get($id_incart)-1);
         }       
        
-        return $this->redirectToRoute('product_edit', ['id' => $id]);
+        $referer = $request->headers->get('referer');   
+        return $this->redirect($referer);
     }
 
-
-
-
+    public function deleteWholeProductFromCart ($id)
+    {        
+       
+        return $this->redirectToRoute('cart_view', ['id' => $id]);
+    }
     
 }

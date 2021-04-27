@@ -163,6 +163,8 @@ class ProductsController extends AbstractController
         $contents = $this->renderView('product/product.html.twig',
             [
                 'product' => $product,
+                'id' => $id,
+                'quantity'=>$this->session->get($id),
             ],
         );
 
