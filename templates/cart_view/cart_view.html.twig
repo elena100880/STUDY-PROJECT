@@ -15,29 +15,33 @@
         </tr>
 
         {% set i = 0 %}
-        {% for id, quantity in cartArray %}
-        
+        {% set sum = 0 %}
+        {% for orderProduct in arrayOfOrderProductsObjectsInCart %}
         <tr>
 
-            <td> {% set i = i + 1 %} {{i}}</td>
-            <td> {{id}} </td>
-            <td>  </td>
-            <td>  </td>
-            <td> <a class="button" href="{{ path('product_fromcart', {id: id}) }}"><span class="plus">  &#8722  </span></a><br> </td>
+            <td align = 'center'> {% set i = i + 1 %} {{i}}</td>
+            <td align = 'center'> {{orderProduct.products.id}} </td>
+            <td align = 'center'> {{orderProduct.products}} </td>
+            <td align = 'center'> {{orderProduct.products.price}} </td>
+            <td align = 'center'> <a class="button" href="{{ path('product_fromcart', {id :orderProduct.products.id}) }}"><span class="plus">  &#8722  </span></a><br> </td>
 
-            <td> {{quantity}} </td>
+        {% set i = 0 %}
+            <td align = 'center'> {{orderProduct.amount}} </td>
 
-            <td> <a class="button" href="{{ path('product_tocart', {id: id}) }}"><span class="plus"> + </span></a> </td>
+            <td align = 'center'> <a class="button" href="{{ path('product_tocart', {id :orderProduct.products.id}) }}"><span class="plus"> + </span></a> </td>
 
-            <td>  </td>
+            <td align = 'center'> 
+                    {{orderProduct.products.price * orderProduct.amount}} 
+                    {% set sum = sum + orderProduct.products.price * orderProduct.amount %} 
+            </td>
 
-            <td> <a class="button" href="{{ path('delete_whole_product_from_cart',  {id: id}) }}"> <span class="plus"> &#x2718 </span> </a>   </td>
+            <td align = 'center'> <a class="button" href="{{ path('delete_whole_product_from_cart',  {id :orderProduct.products.id}) }}"> <span class="plus"> &#x2718 </span> </a>   </td>
 
         </tr>
         {% endfor %}
 
     </table>
 
-    <h4>Total sum: </h4> <br>
+    <h4>Total sum:   <span class="plus"> {{ sum }} zł. </span> </h4> <br>
 
 {% endblock %}

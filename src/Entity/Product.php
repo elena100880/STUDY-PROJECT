@@ -160,4 +160,14 @@ class Product
 
         return $this;
     }
+
+    /* 
+    add this method as it was advised here: https://stackoverflow.com/questions/28710085/symfony2-catchable-fatal-error-object-of-class-could-not-be-converted-to-string;
+
+    without this method an Exception 'Object Entity/Product could't be converted to string' appears in CartPage
+
+    */
+    public function __toString() {
+        return $this->name;
+    }
 }
