@@ -53,7 +53,7 @@ class ProductToCartController extends AbstractController
         else {
             
             $this->session->remove($id_incart);
-            //unset($_SESSION[$id_incart]) ;
+            
         }     
        
         $referer = $request->headers->get('referer');   
@@ -62,7 +62,9 @@ class ProductToCartController extends AbstractController
 
     public function deleteWholeProductFromCart ($id)
     {        
-       
+        $id_incart=$id;
+        $this->session->remove($id_incart);
+        
         return $this->redirectToRoute('cart_view', ['id' => $id]);
     }
     

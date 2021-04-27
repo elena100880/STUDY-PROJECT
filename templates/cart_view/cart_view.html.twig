@@ -11,13 +11,16 @@
     <table>
 
         <tr>
-            <th>SN</th>  <th>Product</th>  <th>Price</th> <th> - 1</th> <th>Quantity</th> <th> + 1</th> <th>Sum</th> <th> Delete the whole position </th> 
+            <th>SN</th> <th>ID</th> <th>Product</th>  <th>Price</th> <th> - 1</th> <th>Quantity</th> <th> + 1</th> <th>Sum</th> <th> Delete the whole position </th> 
         </tr>
 
-        {% for id, quantity in cartArray %}   
+        {% set i = 0 %}
+        {% for id, quantity in cartArray %}
+        
         <tr>
 
-            <td>  </td>
+            <td> {% set i = i + 1 %} {{i}}</td>
+            <td> {{id}} </td>
             <td>  </td>
             <td>  </td>
             <td> <a class="button" href="{{ path('product_fromcart', {id: id}) }}"><span class="plus">  &#8722  </span></a><br> </td>
