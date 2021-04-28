@@ -31,7 +31,7 @@
             <td align = 'center'> <a class="button" href="{{ path('product_tocart', {id :orderProduct.products.id}) }}"><span class="plus"> + </span></a> </td>
 
             <td align = 'center'> 
-                    {{orderProduct.products.price * orderProduct.amount}} 
+                    {{orderProduct.getTotalValue}} 
                     {% set sum = sum + orderProduct.products.price * orderProduct.amount %} 
             </td>
 

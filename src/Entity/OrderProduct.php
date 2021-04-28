@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\OrderProductRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+use App\Entity\Product;
+
 /**
  * @ORM\Entity(repositoryClass=OrderProductRepository::class)
  */
@@ -73,5 +75,15 @@ class OrderProduct
         $this->amount = $amount;
 
         return $this;
+    }
+
+    public function getTotalValue()
+    {
+        $amount= $this->amount;
+        $product = $this->products;
+        $price = $product->getPrice();
+        $totalValue = $amount * $price;
+
+        return $totalValue;
     }
 }

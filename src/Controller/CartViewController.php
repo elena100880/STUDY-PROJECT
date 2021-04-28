@@ -35,6 +35,8 @@ class CartViewController extends AbstractController
                 $orderProduct->setAmount($value);
                 $product=$this->getDoctrine()->getRepository(Product::class)->find($key);
                 $orderProduct->setProducts($product);
+                
+                $v = $orderProduct->getTotalValue();
 
                 array_push($arrayOfOrderProductsObjectsInCart, $orderProduct);
 
@@ -42,7 +44,7 @@ class CartViewController extends AbstractController
                 
             }
         }
-        
+
         $this->session->set('totalQuantity', $totalQuantityOfItemsInCart);
                 
         $contents = $this->renderView('cart_view/cart_view.html.twig',
