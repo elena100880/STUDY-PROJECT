@@ -33,6 +33,8 @@ product_delete:
             path: /products/delete/{id}
             controller: App\Controller\ProductEditController::productdelete
 
+
+
 categories:
             path: /categories
             controller: App\Controller\CategoriesController::categories
@@ -67,6 +69,11 @@ delete_whole_product_from_cart:
 cart_view:
             path: /cart
             controller: App\Controller\CartViewController::cartView
+
+order_form:
+            path: /order
+            controller: App\Controller\OrderController::orderForm
+
 
 login:
             path: /login
