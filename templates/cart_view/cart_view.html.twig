@@ -16,7 +16,7 @@
 
         {% set i = 0 %}
         {% set sum = 0 %}
-        {% for orderProduct in arrayOfOrderProductsObjectsInCart %}
+        {% for orderProduct in arrayOfOrderProductsInCart %}
         <tr>
 
             <td align = 'center'> {% set i = i + 1 %} {{i}}</td>
@@ -25,7 +25,6 @@
             <td align = 'center'> {{orderProduct.products.price}} </td>
             <td align = 'center'> <a class="button" href="{{ path('product_fromcart', {id :orderProduct.products.id}) }}"><span class="plus">  &#8722  </span></a><br> </td>
 
-        {% set i = 0 %}
             <td align = 'center'> {{orderProduct.amount}} </td>
 
             <td align = 'center'> <a class="button" href="{{ path('product_tocart', {id :orderProduct.products.id}) }}"><span class="plus"> + </span></a> </td>
@@ -44,7 +43,41 @@
 
     <h4>Total sum:   <span class="plus"> {{ sum }} zł. </span> </h4> <br>
 
-    {{form(form)}}
+
+
+    {{form_start(form)}}
+
+        {{form_row  (form.amount, {   'required': false,
+                                    'attr': {'class': 'task_field'} 
+                                } 
+                    ) }}   
+
+        {{form_label(form.amount, 'uu')}}
+
+        {{form_errors(form.amount)}}
+        {{form_help(form.amount)}}
+
+    {#    {{form_widget   (form.amount, {    'required': false,
+                                            'attr': {'class': 'task_field'}, 
+                                    } 
+                        ) }}           #}
+
+       
+        {{form_row(form.delete_product)}}
+
+        <div class = 'form'>
+            {{form_row(form.send)}}
+        </div>
+
+        <div class = 'form'>
+            {{form_row(form.refresh)}}
+        </div>
+        
+        <div style = 'clear:both'></div>
+
+    {{form_end(form)}}
+
+
 
     <br><br><a href="{{ path('products') }}">  BACK TO THE LIST OF PRODUCTS >> </a>
 

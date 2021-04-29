@@ -40,7 +40,6 @@ class ProductAddController extends AbstractController
          
         $form->handleRequest($request);
        
-
         if ($form->isSubmitted()) {
             
         // $image saves pdf, not string

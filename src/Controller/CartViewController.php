@@ -14,7 +14,6 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\HttpFoundation\Session\SessionBagInterface;
 
 class CartViewController extends AbstractController
 {
@@ -30,7 +29,7 @@ class CartViewController extends AbstractController
         $all=$this->session->all();
 
         $totalQuantityOfItemsInCart = 0;
-        $arrayOfOrderProductsObjectsInCart = array();
+        $arrayOfOrderProductsInCart = array();
         foreach ($all as $key=>$value) {
             
             if (is_integer($key)) {
@@ -42,7 +41,7 @@ class CartViewController extends AbstractController
 
                 $v = $orderProduct->getTotalValue();
 
-                array_push($arrayOfOrderProductsObjectsInCart, $orderProduct); //array of OrderProducts objects in Cart
+                array_push($arrayOfOrderProductsInCart, $orderProduct); //array of OrderProducts objects in Cart
 
                 $totalQuantityOfItemsInCart = $totalQuantityOfItemsInCart + $value;
                 
@@ -50,10 +49,11 @@ class CartViewController extends AbstractController
         }
 
         $this->session->set('totalQuantity', $totalQuantityOfItemsInCart);
+        $this->session->set('arrayOfOrderfProductsInCart', $arrayOfOrderProductsInCart);
 
         $form = $this->createFormBuilder()
-                                    ->add('amount', NumberType::class)
-                                    ->add('delete_product', CheckboxType::class)
+                                    ->add('amount', NumberType::class, ['label'=> false, ])
+                                    ->add('delete_product', CheckboxType::class,  ['label'=> false, 'required' => false])
 
                                     ->add('send', SubmitType::class, ['label'=>'Make ORDER'])
                                     ->add('refresh', SubmitType::class, ['label'=>'REFRESH your Cart'])
@@ -65,19 +65,23 @@ class CartViewController extends AbstractController
                 
             if ($form->get('send')->isClicked() ) {
                 
+                
                 return $this->redirectToRoute('order_form');
 
             }
             else {
-                
+
                 $data = $form->getData();
+                $amount = $data['amount'];
+                $amount = $form->get('amount')->getData();
+
                 //$amount=$data[''];   
             }
         }
                 
         $contents = $this->renderView('cart_view/cart_view.html.twig',
                 [
-                    'arrayOfOrderProductsObjectsInCart' => $arrayOfOrderProductsObjectsInCart,
+                    'arrayOfOrderProductsInCart' => $arrayOfOrderProductsInCart,
                     'form' => $form->createView(),
                 ],
             );

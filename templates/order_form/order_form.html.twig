@@ -8,7 +8,39 @@
 
 <h1>COMPLETE YOUR ORDER</h1>     
    
-    
+<table>
+
+    <tr>
+        <th>SN</th> <th>ID</th> <th>Product</th>  <th>Price</th>  <th>Quantity</th>  <th>Sum</th> 
+    </tr>
+
+    {% set i = 0 %}
+    {% set sum = 0 %}
+    {% for orderProduct in arrayOfOrderProductsInCart %}
+    <tr>
+
+        <td align = 'center'> {% set i = i + 1 %} {{i}}</td>
+        <td align = 'center'> {{orderProduct.products.id}} </td>
+        <td align = 'center'> {{orderProduct.products}} </td>
+        <td align = 'center'> {{orderProduct.products.price}} </td>
+        
+        <td align = 'center'> {{orderProduct.amount}} </td>
+
+        <td align = 'center'> 
+                {{orderProduct.getTotalValue}} 
+                {% set sum = sum + orderProduct.products.price * orderProduct.amount %} 
+        </td>
+
+    </tr>
+    {% endfor %}
+
+</table>
+
+<h4>Total sum:   <span class="plus"> {{ sum }} zł. </span> </h4> <br>
+
+
+<br><br><a href="{{ path('cart_view') }}">  BACK TO THE CART >> </a>   
+
 {% endblock %}
 
 
