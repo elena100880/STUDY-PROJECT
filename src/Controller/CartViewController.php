@@ -10,8 +10,10 @@ use App\Entity\Product;
 use App\Entity\OrderProduct;
 
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -30,6 +32,8 @@ class CartViewController extends AbstractController
 
         $totalQuantityOfItemsInCart = 0;
         $arrayOfOrderProductsInCart = array();
+        $arrayOfValues = array();
+        $arrayOfRadios = array();
         foreach ($all as $key=>$value) {
             
             if (is_integer($key)) {
@@ -42,7 +46,8 @@ class CartViewController extends AbstractController
                 $v = $orderProduct->getTotalValue();
 
                 array_push($arrayOfOrderProductsInCart, $orderProduct); //array of OrderProducts objects in Cart
-
+                array_push($arrayOfValues, $value);
+                array_push($arrayOfRadios, false);
                 $totalQuantityOfItemsInCart = $totalQuantityOfItemsInCart + $value;
                 
             }
@@ -52,11 +57,34 @@ class CartViewController extends AbstractController
         $this->session->set('arrayOfOrderfProductsInCart', $arrayOfOrderProductsInCart);
 
         $form = $this->createFormBuilder()
-                                    ->add('amount', NumberType::class, ['label'=> false, ])
-                                    ->add('delete_product', CheckboxType::class,  ['label'=> false, 'required' => false])
+                                    ->add('amounts', CollectionType::class,  [
+                                                                                'label'=> false,
+                                                                                'entry_type' => NumberType::class,
+                                                                                'allow_add' => true,
+                                                                                'allow_delete' => true,
+                                                                                'data' => $arrayOfValues,
+                                                                                'entry_options' =>  [
+                                                                                                        'label'=> false,
+                                                                                                        'required' => false,
+                                                                                                    ],
+                                                                                
+                                                                            ])
+                                    ->add('delete_products', CollectionType::class,  [
+                                                                                    'label'=> false, 
+                                                                                    'entry_type' => CheckboxType::class,
+                                                                                    'allow_add' => true,
+                                                                                    'allow_delete' => true,
+                                                                                    'data' => $arrayOfRadios,
+                                                                                    'entry_options' =>  [
+                                                                                                            'label'=> false,
+                                                                                                            'required' => false,
+                                                                                                        ],
+                                                                                    
+                                                                            ])
 
                                     ->add('send', SubmitType::class, ['label'=>'Make ORDER'])
-                                    ->add('refresh', SubmitType::class, ['label'=>'REFRESH your Cart'])
+                                    ->add('refresh', SubmitType::class, ['label'=>'RE-COUNT your Cart'])
+                                    ->add('reset', ResetType::class, ['label'=>'RESET'])
                                     ->getForm();
 
         $form->handleRequest($request);                            
@@ -72,8 +100,8 @@ class CartViewController extends AbstractController
             else {
 
                 $data = $form->getData();
-                $amount = $data['amount'];
-                $amount = $form->get('amount')->getData();
+                $amounts = $data['amounts'];
+                $amounts = $form->get('amounts')->getData();
 
                 //$amount=$data[''];   
             }
