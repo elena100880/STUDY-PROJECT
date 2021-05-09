@@ -32,6 +32,7 @@ class CartViewController extends AbstractController
 
         $totalQuantityOfItemsInCart = 0;
         $arrayOfOrderProductsInCart = array();
+        $arrayOfKeys = array();
         $arrayOfValues = array();
         $arrayOfRadios = array();
         foreach ($all as $key=>$value) {
@@ -43,9 +44,9 @@ class CartViewController extends AbstractController
                 $product=$this->getDoctrine()->getRepository(Product::class)->find($key);
                 $orderProduct->setProducts($product);
 
-                $v = $orderProduct->getTotalValue();
-
+               
                 array_push($arrayOfOrderProductsInCart, $orderProduct); //array of OrderProducts objects in Cart
+                array_push($arrayOfKeys, $key);
                 array_push($arrayOfValues, $value);
                 array_push($arrayOfRadios, false);
                 $totalQuantityOfItemsInCart = $totalQuantityOfItemsInCart + $value;
@@ -100,11 +101,18 @@ class CartViewController extends AbstractController
             else {
 
                 $data = $form->getData();
-                $amounts = $data['amounts'];
-                $amounts = $form->get('amounts')->getData();
+                $amounts = $form->get('amounts')->getData(); //array of ammounts from each product in the table
 
-                //$amount=$data[''];   
+                $i=0;
+                foreach ($amounts as $amount) {
+
+                    $this->session->set($arrayOfKeys[$i], $amount);
+                    $i++;
+                   
+                }
+                return $this->redirect($request->getUri());  
             }
+            
         }
                 
         $contents = $this->renderView('cart_view/cart_view.html.twig',
