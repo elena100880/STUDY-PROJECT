@@ -106,7 +106,11 @@ class CartViewController extends AbstractController
                 $i=0;
                 foreach ($amounts as $amount) {
 
+<<<<<<< HEAD
                     $this->session->set($arrayOfKeys[$i], $amount);
+=======
+                    $this->session->set($arrayOfKeys[i], $amount);
+>>>>>>> 9945a31f4ce90a912bacfadc89b05e53be81370d
                     $i++;
                    
                 }
