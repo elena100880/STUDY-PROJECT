@@ -102,12 +102,19 @@ class CartViewController extends AbstractController
 
                 $data = $form->getData();
                 $amounts = $form->get('amounts')->getData(); //array of ammounts from each product in the table
+                $delete_products = $form->get('delete_products')->getData();
 
                 $i=0;
                 foreach ($amounts as $amount) {
 
-                    $this->session->set($arrayOfKeys[$i], $amount);
-                    $i++;
+                    if (!isset($delete_products[$i]) ) {
+
+                        $this->session->set($arrayOfKeys[$i], $amount);
+                        $i++;
+                    }
+                    else {
+                        return $this->redirectToRoute('delete_whole_product_from_cart', ['id' => $arrayOfKeys[$i]]);
+                    }
                    
                 }
                 return $this->redirect($request->getUri());  
