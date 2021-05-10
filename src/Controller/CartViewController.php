@@ -153,21 +153,22 @@ class CartViewController extends AbstractController
                                 $this->session->set('note'.$arrayOfIds[$i], $note);
                             }
                         }
-                    //}
-                    //else {
-                        //$this->session->remove('note'.$i);
-                    //}
+                
+                    /*else {
+                        $this->session->remove('note'.$i);
+                    } */
+
                     $i++;
                 }
-                return $this->redirectToRoute('cart_view');  
-            }
+                return $this->redirectToRoute('cart_view'); 
+            } 
         }
+        
         
         $contents = $this->renderView('cart_view/cart_view.html.twig',
                                 [
                                     'arrayOfOrderProductsInCart' => $arrayOfOrderProductsInCart,
                                     'form' => $form->createView(),
-                                    //'note' => $note,
                                 ],
                         );
         return new Response($contents);
