@@ -29,14 +29,10 @@
 
                     <td align = 'center'> 
                         
-                    {#    {{orderProduct.amount}}      #}
-
                         {% for amount in form.amounts %}  
 
                             {% if loop.index == i %}
-                            
                                 {{form_widget  (amount) }}
-
                             {% endif %}
                                 
                         {% endfor %}  
@@ -46,20 +42,16 @@
                     <td align = 'center'> <a class="button" href="{{ path('product_tocart', {id :orderProduct.products.id}) }}"><span class="plus"> + </span></a> </td>
 
                     <td align = 'center'> 
-                            {{orderProduct.getTotalValue}} 
-                            {% set sum = sum + orderProduct.products.price * orderProduct.amount %} 
+                        {{orderProduct.getTotalValue}} 
+                        {% set sum = sum + orderProduct.products.price * orderProduct.amount %} 
                     </td>
 
                     <td align = 'center'> 
 
-                    {#    <a class="button" href="{{ path('delete_whole_product_from_cart',  {id :orderProduct.products.id}) }}"> <span class="plus"> &#x2718 </span> </a>    #}
-
                         {% for delete in form.delete_products %}  
 
                             {% if loop.index == i %}
-                            
                                 {{form_widget (delete) }}
-
                             {% endif %}
                                 
                         {% endfor %}      
@@ -71,20 +63,7 @@
 
             </table>
             <br>
-
-
-    {#    {{form_start(form)}}
-
-            {{form_row  (form.amounts,  {    
-                                            
-                                        }, 
-                        ) }}    
-                        
-            {{form_row  (form.delete_product,   {    
-                                                    'required': false,
-                                                }, 
-                        ) }}       #}     
-            
+    
             <div class = 'form'>
                 {{form_row(form.send)}}
             </div>
@@ -98,22 +77,18 @@
             </div>
             <div style = 'clear:both'></div>
 
-        {{form_end(form)}}
+    {{form_end(form)}}
 
-
-    <h4>Total sum:   <span class="plus"> {{ sum }} zł. </span> </h4> <br>
-
-    {#    {{form_row  (form.amount, {   'required': false,
-                                    'attr': {'class': 'task_field'} 
-                                } 
-                    ) }}    
-
-        {{form_label(form.amount)}}
-        {{form_errors(form.amount)}}
-        {{form_help(form.amount) }}       #}      
- 
-                        
-    {#    {{ form.amount.vars.id }}         #}        
+    {% for key, value in app.session.all %}
+            
+                {% if key starts with 'note' %}               
+                    <span style="color:red">{{ value }}</span><br>
+                {% endif %}
+           
+       
+    {% endfor %}
+   
+    <h4>Total sum:   <span class="plus"> {{ sum }} $. </span> </h4> <br>
 
     <br><br><a href="{{ path('products') }}">  BACK TO THE LIST OF PRODUCTS >> </a>
 
