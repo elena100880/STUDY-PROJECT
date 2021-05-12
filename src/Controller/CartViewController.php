@@ -42,10 +42,10 @@ class CartViewController extends AbstractController
         foreach ($all as $key=>$value) {
             
             /**
-             * @todo mayby another way of extracting only 'products session variables'??
+             * @todo mayby another way of extracting only 'products session variables'?, some filter??
              */
             if (is_integer($key)) { 
-                               
+                             
                 $orderProduct = new OrderProduct();
                 $orderProduct->setAmount($value);
                 $product=$this->getDoctrine()->getRepository(Product::class)->find($key);
@@ -60,6 +60,7 @@ class CartViewController extends AbstractController
             }
         }
 
+        $r = $this->session->get('_security_main'); 
         $this->session->set('totalQuantity', $totalQuantityOfItemsInCart);
         $this->session->set('arrayOfOrderfProductsInCart', $arrayOfOrderProductsInCart);
         

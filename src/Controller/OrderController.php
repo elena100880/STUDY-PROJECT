@@ -32,9 +32,10 @@ class OrderController extends AbstractController
         
     public function orderForm (Request $request): Response
     {
-        //preventing showing products in Cart in Order table if SendOrder-button was not already clicked on Cart-page:
+        //preventing showing products in Order-table on Order-page if SendOrder-button was not  clicked on Cart-page:
         if ($this->session->get('sendOrderClicked') ) {
             $arrayOfOrderProductsInCart = $this->session->get('arrayOfOrderfProductsInCart', null);
+            //$this->session->remove('sendOrderClicked');
         }
         else $arrayOfOrderProductsInCart = 0;
 
@@ -55,7 +56,6 @@ class OrderController extends AbstractController
         
         if ($form->isSubmitted() ) {
 
-            $time = time();
             $date = new \DateTime();
             $user = $this->getUser();
 
@@ -79,7 +79,25 @@ class OrderController extends AbstractController
                 $entityManager->persist($orderProduct);
                 $entityManager->flush();
             }
-            session_unset();
+            
+            //remowing session variables:
+            //session_unset();
+            /**
+             * @todo how to remove session variables all at once (by session_unset() for example), but not logging out??:
+             */
+            
+            $this->session->remove('arrayOfOrderProductsInCart');
+            $this->session->remove('totalQuantity');
+            $this->session->remove('sendOrderClicked');
+            $all=$this->session->all();
+            foreach ($all as $key=>$value) {
+            
+                if (is_integer($key)) { 
+                    $this->session->remove($key);         
+                }
+            }
+                    
+            
             return $this->redirectToRoute('products');
         }
        
