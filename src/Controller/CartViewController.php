@@ -32,31 +32,29 @@ class CartViewController extends AbstractController
         $all=$this->session->all();
 
         $totalQuantityOfItemsInCart = 0;
-        $arrayOfOrderProductsInCart = array();
-        $arrayOfIds = array();
-        $arrayOfAmounts = array();
-        $arrayOfRadios = array();
+        $arrayOfOrderProductsInCart = array();  //array of OrderProducts objects in Cart
+        $arrayOfIds = array();   //array of IDs of products in Cart
+        $arrayOfAmounts = array();   //array of amounts of products in CART
+        $arrayOfRadios = array();   //array of 'Falses' for 'data' option for checkboxes in CollectionType
 
         $i=0;
 
         foreach ($all as $key=>$value) {
             
-
+            /**
+             * @todo mayby another way of extracting only 'products session variables'??
+             */
             if (is_integer($key)) { 
-                /**
-                 * @todo mayby another way of extracting only 'products session variables'??
-                 */
-                
+                               
                 $orderProduct = new OrderProduct();
                 $orderProduct->setAmount($value);
                 $product=$this->getDoctrine()->getRepository(Product::class)->find($key);
                 $orderProduct->setProducts($product);
-
                
-                array_push($arrayOfOrderProductsInCart, $orderProduct); //array of OrderProducts objects in Cart
-                array_push($arrayOfIds, $key);  //array of IDs of products in Cart
-                array_push($arrayOfAmounts, $value);   //array of amounts of products in CART
-                array_push($arrayOfRadios, false);   //array of 'Falses' for 'data' option for checkboxes
+                array_push($arrayOfOrderProductsInCart, $orderProduct); 
+                array_push($arrayOfIds, $key); 
+                array_push($arrayOfAmounts, $value);
+                array_push($arrayOfRadios, false);
                 $totalQuantityOfItemsInCart = $totalQuantityOfItemsInCart + $value;
                 
             }
@@ -64,10 +62,12 @@ class CartViewController extends AbstractController
 
         $this->session->set('totalQuantity', $totalQuantityOfItemsInCart);
         $this->session->set('arrayOfOrderfProductsInCart', $arrayOfOrderProductsInCart);
-
+        
+        
         /**
          * @todo 
-         * make custom formType class instead of the below createFormBuilder in controller??:
+         * if possible - make custom formType class or FormType for OrderProduct class
+         * instead of the below createFormBuilder in controller:
          */
         $form = $this->createFormBuilder()
                                     ->add('amounts', CollectionType::class,  [
@@ -96,7 +96,7 @@ class CartViewController extends AbstractController
                                                                             ])
 
                                     ->add('send', SubmitType::class, ['label'=>'Make ORDER'])
-                                    ->add('refresh', SubmitType::class, ['label'=>'RE-COUNT your Cart'])
+                                    ->add('refresh', SubmitType::class, ['label'=>'REFRESH and RE-COUNT your Cart'])
                                     ->add('reset', ResetType::class, ['label'=>'RESET'])
                                     ->getForm();
 
@@ -105,6 +105,8 @@ class CartViewController extends AbstractController
         if ($form->isSubmitted() ) {
                 
             if ($form->get('send')->isClicked() ) {
+                
+                $this->session->set('sendOrderClicked', true);
                 return $this->redirectToRoute('order_form');
             }
             else {
@@ -116,16 +118,16 @@ class CartViewController extends AbstractController
                 $i=0;
                 foreach ($amounts as $amount) {
 
-                    //checking if Product with this id was not deleted earlier fron cart at Product page:
+                    //checking if Product with this ID was not deleted earlier fron cart at Product page
                     //if ( isset($arrayOfIds[$i]) ) {
 
-                        //deleting the whole product from Cart if checkbox is marked or amount is 0 or empty:
+                        //deleting the whole product from Cart if checkbox is marked or amount-field is 0 or empty:
                         if (isset($delete_products[$i]) or $amount == 0 or $amount == null) {
 
                             /**
                              * @todo
                              * not able just to redirect to Route 'delete_whole_product_from_cart'
-                             * because then -  not deleting more than 1 more whole product from the Cart at once
+                             * because then -  not deleting more than 1 whole product from the Cart at once
                              */
 
                             $id_incart = $arrayOfIds[$i];
@@ -153,17 +155,13 @@ class CartViewController extends AbstractController
                                 $this->session->set('note'.$arrayOfIds[$i], $note);
                             }
                         }
-                
-                    /*else {
-                        $this->session->remove('note'.$i);
-                    } */
-
+                                    
                     $i++;
                 }
                 return $this->redirectToRoute('cart_view'); 
             } 
         }
-        
+
         
         $contents = $this->renderView('cart_view/cart_view.html.twig',
                                 [
