@@ -15,11 +15,7 @@ td, th {
 	border-collapse: collapse;
 	padding: 5px;
 }
-#form > div{
-	margin-top: 0px;
-}
 button {
-	
 	color: black;
 	margin: 20px 10px 20px 10px;
 	padding: 10px;
@@ -39,25 +35,16 @@ label {
 	width: 200px;
 	box-sizing: content-box;
 }
-input, select {
+input {
 	color: black;
 	width: 200px;
 	box-sizing: content-box;
 	padding: 0;
-	
 }
-a.button {
+.form {
+	float:left;
+}
+a {
 	text-decoration: none;
 	color: black;
-}
-#addbutton {
-	margin-left: 200px;
-} 
-.links{
-	float: left;
-}
-.cart {
-	float: right;
-	padding-right: 10px;
-
 }

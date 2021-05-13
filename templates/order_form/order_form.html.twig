@@ -36,14 +36,36 @@
 
 </table>
 
-<h4>Total sum:   <span class="plus"> {{ sum }} zł. </span> </h4> <br>
+<h4>Total sum:   <span class="plus"> {{ sum }} zł. </span> </h4>
+
+{% if note is not null %}
+<span style="color:red; font-weight:bold">{{note}}</span><br><br>
+{% endif %}
 
 <h2>Please add information to complete your order:</h2>
     
-{{form(form)}}
+{{form_start(form)}}
 
+    {{form_row(form.name)}}
+    {{form_row(form.surname)}}
+    {{form_row(form.street)}}
+    {{form_row(form.city)}}
+    {{form_row(form.post)}}
 
-<br><br><a href="{{ path('cart_view') }}">  BACK TO THE CART >> </a>   
+    <div class = 'form'>
+        {{form_row(form.send)}}
+    </div>
+
+    <div class = 'form'>
+        <button type="button"><a href="{{ path('cart_view') }}">Back to CART</a></button>
+    </div>   
+
+    <div class = 'form'>
+        {{form_row(form.reset)}}
+    </div>
+    <div style = 'clear:both'></div>
+
+{{form_end(form)}}
 
 {% endblock %}
 

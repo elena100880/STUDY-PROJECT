@@ -4,29 +4,18 @@
 	padding: 20px;
 	padding-left: 50px;
 }
-#form > div{
-	margin-top: 0px;
-}
-button[type='submit'], button[type='reset'] {
+button {
 	color: black;
 	margin: 20px 10px 20px 10px;
 	padding: 10px;
 	width: 100px;
+	height: 55px;
 	font-family: 'Open Sans', sans-serif;
 	font-weight: bold;
 	background-color: mediumSeaGreen;
 	border: 2px solid black;
-	
+	text-transform: capitalize;
 }
-label {
-	color: green;
-	padding: 5px;
-	margin: 0;
-	display: inline-block;
-	width: 300px;
-	box-sizing: content-box;
-}
-
 input {
 	color: black;
 	width: 50px;
@@ -37,9 +26,6 @@ span {
 	color:red;
 	font-weight: bold;;
 }
-label.required {
-	width: 300px;
-}
 table {
 	margin-bottom: 10px;
 	border-collapse: collapse;
@@ -49,12 +35,9 @@ td, th {
 	border-collapse: collapse;
 	padding: 5px;
 }
-span {
-	color: black;
-}
 a {
 	text-decoration: none;
-	
+	color:black;
 }
 .plus {
 	font-size:40px;

@@ -29,6 +29,9 @@ class CartViewController extends AbstractController
         
     public function cartView(Request $request): Response
     {
+        //flag for deleting data in Order-table on Order-page after opening again or refreshing Cart-page:
+        $this->session->remove('sendOrderClicked');
+
         $all=$this->session->all();
 
         $totalQuantityOfItemsInCart = 0;
@@ -59,12 +62,9 @@ class CartViewController extends AbstractController
                 
             }
         }
-
-        $r = $this->session->get('_security_main'); 
         $this->session->set('totalQuantity', $totalQuantityOfItemsInCart);
         $this->session->set('arrayOfOrderfProductsInCart', $arrayOfOrderProductsInCart);
-        
-        
+                
         /**
          * @todo 
          * if possible - make custom formType class or FormType for OrderProduct class
@@ -97,7 +97,7 @@ class CartViewController extends AbstractController
                                                                             ])
 
                                     ->add('send', SubmitType::class, ['label'=>'Make ORDER'])
-                                    ->add('refresh', SubmitType::class, ['label'=>'REFRESH and RE-COUNT your Cart'])
+                                    ->add('recount', SubmitType::class, ['label'=>'Recount Cart'])
                                     ->add('reset', ResetType::class, ['label'=>'RESET'])
                                     ->getForm();
 
@@ -107,7 +107,7 @@ class CartViewController extends AbstractController
                 
             if ($form->get('send')->isClicked() ) {
                 
-                $this->session->set('sendOrderClicked', true);
+                $this->session->set('sendOrderClicked', true); ///flag for not deleting data in Order-table on Order-page after making order
                 return $this->redirectToRoute('order_form');
             }
             else {
