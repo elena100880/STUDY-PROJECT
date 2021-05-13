@@ -119,9 +119,6 @@ class CartViewController extends AbstractController
                 $i=0;
                 foreach ($amounts as $amount) {
 
-                    //checking if Product with this ID was not deleted earlier fron cart at Product page
-                    //if ( isset($arrayOfIds[$i]) ) {
-
                         //deleting the whole product from Cart if checkbox is marked or amount-field is 0 or empty:
                         if (isset($delete_products[$i]) or $amount == 0 or $amount == null) {
 
@@ -162,7 +159,6 @@ class CartViewController extends AbstractController
                 return $this->redirectToRoute('cart_view'); 
             } 
         }
-
         
         $contents = $this->renderView('cart_view/cart_view.html.twig',
                                 [
