@@ -43,11 +43,14 @@ For easier using  **/var/data.db** file is added to the repository.
   
 + **localhost/index.php/categories**  - list of **categories** of the products with links to:
   * editing a particular category- **localhost/index.php/category/edit/{id}** with links to:
-    * adding a category - **https://localhost/index.php/category/add** ;
+    * adding a category - **/localhost/index.php/category/add** ;
   
 + **localhost/index.php/category/tree/{id}** - tree of categories (parent-child tree), recursion used;
   
 + **logging in** is customised to stay in the previous page;
+
++ **localhost/index.php/cart** - editing the cart with added products and link to: 
+  * completing and sending the order - **/localhost/index.php/order**
 
 
 
