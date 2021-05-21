@@ -77,6 +77,7 @@ class OrderProduct
         return $this;
     }
 
+    //count total value of position in Order:
     public function getTotalValue()
     {
         $amount= $this->amount;

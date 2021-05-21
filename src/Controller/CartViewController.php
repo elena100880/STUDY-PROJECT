@@ -29,45 +29,40 @@ class CartViewController extends AbstractController
         
     public function cartView(Request $request): Response
     {
-        //flag for deleting data in Order-table on Order-page after opening again or refreshing Cart-page:
-        $this->session->remove('sendOrderClicked');
-
+        
         $all=$this->session->all();
-
+   
         $totalQuantityOfItemsInCart = 0;
-        $arrayOfOrderProductsInCart = array();  //array of OrderProducts objects in Cart
+        $arrayOfProductsInCart = array();  //array of OrderProducts objects in Cart
         $arrayOfIds = array();   //array of IDs of products in Cart
         $arrayOfAmounts = array();   //array of amounts of products in CART
         $arrayOfRadios = array();   //array of 'Falses' for 'data' option for checkboxes in CollectionType
 
-        $i=0;
-
         foreach ($all as $key=>$value) {
             
             /**
-             * @todo mayby another way of extracting only 'products session variables'?, some filter??
+             * @todo mayby another way of extracting only 'products session variables'?
+             * @todo remake this into class Cart:
              */
             if (is_integer($key)) { 
                              
-                $orderProduct = new OrderProduct();
-                $orderProduct->setAmount($value);
                 $product=$this->getDoctrine()->getRepository(Product::class)->find($key);
-                $orderProduct->setProducts($product);
-               
-                array_push($arrayOfOrderProductsInCart, $orderProduct); 
+                
+                array_push($arrayOfProductsInCart, $product); 
                 array_push($arrayOfIds, $key); 
                 array_push($arrayOfAmounts, $value);
                 array_push($arrayOfRadios, false);
-                $totalQuantityOfItemsInCart = $totalQuantityOfItemsInCart + $value;
-                
+                if (is_integer($value)) $totalQuantityOfItemsInCart = $totalQuantityOfItemsInCart + $value;
             }
+            
         }
         $this->session->set('totalQuantity', $totalQuantityOfItemsInCart);
-        $this->session->set('arrayOfOrderfProductsInCart', $arrayOfOrderProductsInCart);
+        $this->session->set('arrayOfProductsInCart', $arrayOfProductsInCart);
+        $this->session->set('arrayOfAmounts', $arrayOfAmounts);
                 
         /**
          * @todo 
-         * if possible - make custom formType class or FormType for OrderProduct class
+         * if possible?? - make custom formType class or FormType for OrderProduct class
          * instead of the below createFormBuilder in controller:
          */
         $form = $this->createFormBuilder()
@@ -96,37 +91,43 @@ class CartViewController extends AbstractController
                                                                                     
                                                                             ])
 
-                                    ->add('send', SubmitType::class, ['label'=>'Make ORDER'])
+                                    ->add('send', SubmitType::class, ['label'=>'Recount and make ORDER'])
                                     ->add('recount', SubmitType::class, ['label'=>'Recount Cart'])
-                                    ->add('reset', ResetType::class, ['label'=>'RESET'])
+                                    ->add('reset', SubmitType::class, ['label'=>'RESET'])
                                     ->getForm();
 
         $form->handleRequest($request);                            
                                     
         if ($form->isSubmitted() ) {
+
+            $data = $form->getData();
+            $amounts = $form->get('amounts')->getData(); //array of ammounts from each product in the table
+            $delete_products = $form->get('delete_products')->getData();
+
+            if ($form->get('reset')->isClicked() ) {
                 
+                return $this->redirectToRoute('cart_view');
+            }
+
             if ($form->get('send')->isClicked() ) {
                 
+                foreach ($arrayOfAmounts as $amount) {
+                    
+                    if ( !is_integer($amount) )  return $this->redirectToRoute('cart_view');
+                
+                }
+
                 $this->session->set('sendOrderClicked', true); ///flag for not deleting data in Order-table on Order-page after making order
                 return $this->redirectToRoute('order_form');
             }
+
             else {
-
-                $data = $form->getData();
-                $amounts = $form->get('amounts')->getData(); //array of ammounts from each product in the table
-                $delete_products = $form->get('delete_products')->getData();
-
-                $i=0;
+                
+                $i=0;              
                 foreach ($amounts as $amount) {
 
-                        //deleting the whole product from Cart if checkbox is marked or amount-field is 0 or empty:
-                        if (isset($delete_products[$i]) or $amount == 0 or $amount == null) {
-
-                            /**
-                             * @todo
-                             * not able just to redirect to Route 'delete_whole_product_from_cart'
-                             * because then -  not deleting more than 1 whole product from the Cart at once
-                             */
+                    //deleting the whole product from Cart if checkbox is marked or amount-field is 0 or empty:
+                    if (isset($delete_products[$i]) or $amount == 0 or $amount == null) {
 
                             $id_incart = $arrayOfIds[$i];
                             $removedQuantity = $this->session->get($id_incart);
@@ -136,33 +137,62 @@ class CartViewController extends AbstractController
                             $totalQuantityOfItemsInCart = $this->session->get('totalQuantity');
                             $this->session->set('totalQuantity', $totalQuantityOfItemsInCart - $removedQuantity);
                             
-                        }
+                            $this->session->remove('sendOrderClicked');
+                            
+                    }
 
-                        //validating and changing the amount of product:
-                        /**
-                         * @todo
-                         * make validation in custom FormType, if I'll make that custom FormType in future ?? 
-                         */
-                        else {
-                            if (is_numeric($amount) and ($amount - floor( $amount) == 0 ) ) {
-                                $this->session->set($arrayOfIds[$i], $amount);
+                    //validating and changing the amount of product and the amount of total products in Cart:
+                    /**
+                     * @todo
+                     * make validation in custom FormType or Class?? if I'll make that custom FormType in future ?? 
+                     */
+                    else {
+
+                        $previousAmount = $this->session->get($arrayOfIds[$i]);
+
+                        if (is_numeric($amount) and ($amount - floor( $amount) == 0 ) ) {
+                                
+                                if ($previousAmount != $amount) {
+                                    
+                                    $this->session->remove('sendOrderClicked');
+
+                                    $totalQuantityOfItemsInCart = $this->session->get('totalQuantity');
+                                    if (is_integer($previousAmount) ) {
+                                        $this->session->set('totalQuantity', $totalQuantityOfItemsInCart - $previousAmount + $amount );
+                                    }
+                                    else {
+                                        $this->session->set('totalQuantity', $totalQuantityOfItemsInCart + $amount );
+                                    }
+                                    
+                                    $this->session->set($arrayOfIds[$i], intval($amount) );
+
+                                }
                                 $this->session->remove('note'.$arrayOfIds[$i]);
-                            }
-                            else {
+                                                        
+                        }
+                        else {
                                 $note = "Please enter the whole number for ID $arrayOfIds[$i] instead of '$amount' !!";
                                 $this->session->set('note'.$arrayOfIds[$i], $note);
-                            }
+                                
+                                $totalQuantityOfItemsInCart = $this->session->get('totalQuantity');
+                                if (is_integer($previousAmount) ) {
+                                    $this->session->set('totalQuantity', $totalQuantityOfItemsInCart - $previousAmount);
+                                }
+                                
+                                $this->session->set($arrayOfIds[$i], $amount);
+
+                                $this->session->remove('sendOrderClicked');
                         }
-                                    
+                    }
                     $i++;
                 }
-                return $this->redirectToRoute('cart_view'); 
-            } 
+                return $this->redirectToRoute('cart_view');
+            }
         }
         
         $contents = $this->renderView('cart_view/cart_view.html.twig',
                                 [
-                                    'arrayOfOrderProductsInCart' => $arrayOfOrderProductsInCart,
+                                    'arrayOfProductsInCart' => $arrayOfProductsInCart,
                                     'form' => $form->createView(),
                                 ],
                         );

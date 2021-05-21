@@ -28,11 +28,10 @@ class ProductToCartController extends AbstractController
     {
         $id_incart=$id;
                
-        if ($this->session->get($id_incart) != null ) {
+        if ($this->session->get($id_incart) != null and is_integer($this->session->get($id_incart)) ) {
             
             $this->session->set($id_incart, $this->session->get($id_incart)+1);
-            
-
+        
         }
         else {
             $this->session->set($id_incart, 1);
@@ -40,6 +39,7 @@ class ProductToCartController extends AbstractController
         $totalQuantityOfItemsInCart = $this->session->get('totalQuantity');
         $this->session->set('totalQuantity', $totalQuantityOfItemsInCart + 1);
         $this->session->remove('note'.$id);
+        
         $this->session->remove('sendOrderClicked');
 
         $referer = $request->headers->get('referer');   
@@ -49,19 +49,24 @@ class ProductToCartController extends AbstractController
     public function product_fromcart (Request $request, $id)
     {
         $id_incart=$id;
+        $totalQuantityOfItemsInCart = $this->session->get('totalQuantity');
 
-        if ($this->session->get($id_incart) > 1) {
+        if ($this->session->get($id_incart) > 1 and is_integer($this->session->get($id_incart)) )  {
             
             $this->session->set($id_incart, $this->session->get($id_incart)-1);
+            $this->session->set('totalQuantity', $totalQuantityOfItemsInCart - 1);
         }
-        else {
+        elseif ( $this->session->get($id_incart) === 1 ) {
             
             $this->session->remove($id_incart);
+            $this->session->set('totalQuantity', $totalQuantityOfItemsInCart - 1);
             
         }     
-       
-        $totalQuantityOfItemsInCart = $this->session->get('totalQuantity');
-        $this->session->set('totalQuantity', $totalQuantityOfItemsInCart - 1);
+        else {
+            $this->session->remove($id_incart);
+        }
+
+        $this->session->remove('sendOrderClicked');
         $this->session->remove('note'.$id);
 
         $referer = $request->headers->get('referer');   

@@ -25,7 +25,15 @@
 
     <a class="button" href="{{ path('product_tocart', {id: id}) }}"><span class="plus"> + </span></a>
     
-    <span style = "font-size:40px; white-space: pre; ">    {{quantity}} product/s in cart    </span>
+    <span style = "font-size:40px; white-space: pre; ">    
+        
+        {% if quantity matches '/^\\d+$/' %}
+            {{quantity}} product/s in cart    
+        {% else %}
+            0 product/s in cart
+        {% endif %}
+    
+    </span>
 
    {# {% if quantity is defined and quantity != null %} 
         <a class="button" href="{{ path('product_fromcart', {id: id}) }}"><span class="plus">  &#8722  </span></a><br>

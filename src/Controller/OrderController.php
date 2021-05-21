@@ -33,14 +33,18 @@ class OrderController extends AbstractController
         
     public function orderForm (Request $request): Response
     {
-        //preventing showing products in Order-table on Order-page if SendOrder-button was not clicked on Cart-page yet:
-        if ($this->session->get('sendOrderClicked') ) {    
-            $arrayOfOrderProductsInCart = $this->session->get('arrayOfOrderfProductsInCart');
-            $note=null;
+        /* 
+        * not showing products in Order-table on Order-page if SendOrder-button was not clicked on Cart-page yet,
+        * or if cart-page was recounted with new amounts,
+        * or if some product was added to Cart from product-page: 
+        */
+        if ($this->session->get('sendOrderClicked') and ($this->session->get('arrayOfProductsInCart')) ) {    
+            $arrayOfProductsInCart = $this->session->get('arrayOfProductsInCart');
+            $note=null; //flag for empty order after changings in Cart
         }
         else {
-            $arrayOfOrderProductsInCart = [];
-            $note = 'Your cart was aktualized!! Please see Cart.'; //flag for empty order after refreshing Cart
+            $arrayOfProductsInCart = [];
+            $note = 'Your cart was changed/empty or not submitted!! Please go back to the Cart.'; //flag for not empty order after refreshing Cart
         }
 
         $form = $this->createFormBuilder()
@@ -59,42 +63,53 @@ class OrderController extends AbstractController
         $form->handleRequest($request);  
         
         if ($form->isSubmitted() ) {
+            
+            if ($form->get('reset')->isClicked() ) {
+                            
+            if (empty($arrayOfProductsInCart) ) {
+                    $note = 'Your cart was changed/empty or not submitted!! Please go back to the Cart.';
+            }
+            else {
 
-                $date = new \DateTime();
-                $user = $this->getUser();
-
-                $order = new Order();
-                $order->setDate($date);
-                if ($user) $order->setUser($user);
-
-                //saving Order to DB:
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($order);
-                $entityManager->flush();
-
-                if (empty($arrayOfOrderProductsInCart)) {
-                    $note = 'Your cart was changed!! Please make new order.';
-                }
-                else {
-                    //saving OrderProducts to DB:
-                    foreach ($arrayOfOrderProductsInCart as $orderProduct) {
+                    //saving Order to DB:
+                    $date = new \DateTime();
+                    $user = $this->getUser();
+    
+                    $order = new Order();
+                    $order->setDate($date);
+                    if ($user) $order->setUser($user);
                         
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager->persist($order);
+                    $entityManager->flush();
+
+                    //saving OrderProducts to DB:
+                    $i = 0;
+                    foreach ($arrayOfProductsInCart as $product) {
+                        
+                        $orderProduct = new OrderProduct();
+
                         $orderProduct->setOrders($order);
 
-                        $product = $this->getDoctrine()->getRepository(Product::class)->find($orderProduct->getProducts()->getId());
-                        $orderProduct->setProducts($product);
+                        $arrayOfAmounts = $this->session->get('arrayOfAmounts');
+                        $orderProduct->setAmount( $arrayOfAmounts[$i] );
+
+                        $productToOrderProduct = $this->getDoctrine()->getRepository(Product::class)->find($product->getId());
+                        $orderProduct->setProducts($productToOrderProduct);
 
                         $entityManager->persist($orderProduct);
                         $entityManager->flush();
+                        $i++;
                     }
                 
-                    //remowing session variables:
-                    //session_unset();
                     /**
+                     * emowing session variables:
+                     * 
                      * @todo how to remove session variables all at once (by session_unset() for example), but not logging out??:
                      */
                     
-                    $this->session->remove('arrayOfOrderProductsInCart');
+                    $this->session->remove('arrayOfProductsInCart');
+                    $this->session->remove('arrayOfAmounts');
                     $this->session->remove('totalQuantity');
                     $this->session->remove('sendOrderClicked');
                     $all=$this->session->all();
@@ -105,12 +120,12 @@ class OrderController extends AbstractController
                         }
                     }
                     return $this->redirectToRoute('products');
-                }
+            }
         }
        
         $contents = $this->renderView('order_form/order_form.html.twig',
                 [
-                    'arrayOfOrderProductsInCart' => $arrayOfOrderProductsInCart,
+                    'arrayOfProductsInCart' => $arrayOfProductsInCart,
                     'form' => $form->createView(),
                     'note' => $note,
                 ],

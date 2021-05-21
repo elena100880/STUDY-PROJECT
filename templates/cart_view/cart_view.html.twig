@@ -15,47 +15,34 @@
                     <th>SN</th> <th>ID</th> <th>Product</th>  <th>Price</th> <th> - 1</th> <th>Quantity</th> <th> + 1</th> <th>Sum</th> <th> Delete the whole position </th> 
                 </tr>
 
-                {% set i = 0 %}
                 {% set sum = 0 %}
-                
-                {% for orderProduct in arrayOfOrderProductsInCart %}
+                {% for product in arrayOfProductsInCart %}
                 <tr>
 
-                    <td align = 'center'> {% set i = i + 1 %} {{i}}</td>
-                    <td align = 'center'> {{orderProduct.products.id}} </td>
-                    <td align = 'center'> {{orderProduct.products}} </td>
-                    <td align = 'center'> {{orderProduct.products.price}} </td>
-                    <td align = 'center'> <a class="button" href="{{ path('product_fromcart', {id :orderProduct.products.id}) }}"><span class="plus">  &#8722  </span></a><br> </td>
+                    <td align = 'center'> {{ loop.index }} </td>
+                    <td align = 'center'> {{product.id}} </td>
+                    <td align = 'center'> {{product.name}} </td>
+                    <td align = 'center'> {{product.price}} </td>
+                    <td align = 'center'> <a class="button" href="{{ path('product_fromcart', {id :product.id}) }}"><span class="plus">  &#8722  </span></a><br> </td>
 
                     <td align = 'center'> 
-                        
-                        {% for amount in form.amounts %}  
-
-                            {% if loop.index == i %}
-                                {{form_widget  (amount) }}
-                            {% endif %}
-                                
-                        {% endfor %}  
-
+                        {{form_widget  (form.amounts[loop.index0] ) }}
                     </td>
 
-                    <td align = 'center'> <a class="button" href="{{ path('product_tocart', {id :orderProduct.products.id}) }}"><span class="plus"> + </span></a> </td>
+                    <td align = 'center'> <a class="button" href="{{ path('product_tocart', {id :product.id}) }}"><span class="plus"> + </span></a> </td>
 
                     <td align = 'center'> 
-                        {{orderProduct.getTotalValue}} 
-                        {% set sum = sum + orderProduct.products.price * orderProduct.amount %} 
+                        {% if form.amounts[loop.index0].vars.value matches '/^\\d+$/' %}
+                            {% set totalValue = product.price * form.amounts[loop.index0].vars.value %} 
+                            {{ totalValue }}
+                            {% set sum = sum + totalValue %}
+                        {% else %}
+                            <span style="color:red">!!!</span>
+                        {% endif %}
                     </td>
 
                     <td align = 'center'> 
-
-                        {% for delete in form.delete_products %}  
-
-                            {% if loop.index == i %}
-                                {{form_widget (delete) }}
-                            {% endif %}
-                                
-                        {% endfor %}      
-
+                        {{form_widget (form.delete_products[loop.index0]) }}
                     </td>
 
                 </tr>
@@ -72,13 +59,9 @@
                 {{form_row(form.recount)}}
             </div>
 
-        {#    <div class = 'form'>
-                <button type="button"><a href="{{ path('cart_view') }}">Refresh Cart</a></button>
-            </div>   #}
-            
             <div class = 'form'>
                 {{form_row(form.reset)}}
-            </div>
+            </div>   
             <div style = 'clear:both'></div>
 
     {{form_end(form)}}

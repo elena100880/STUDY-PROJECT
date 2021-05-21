@@ -14,21 +14,24 @@
         <th>SN</th> <th>ID</th> <th>Product</th>  <th>Price</th>  <th>Quantity</th>  <th>Sum</th> 
     </tr>
 
-    {% set i = 0 %}
     {% set sum = 0 %}
-    {% for orderProduct in arrayOfOrderProductsInCart %}
+    {% for product in arrayOfProductsInCart %}
     <tr>
 
-        <td align = 'center'> {% set i = i + 1 %} {{i}}</td>
-        <td align = 'center'> {{orderProduct.products.id}} </td>
-        <td align = 'center'> {{orderProduct.products}} </td>
-        <td align = 'center'> {{orderProduct.products.price}} </td>
+        <td align = 'center'> {{ loop.index }} </td>
+        <td align = 'center'> {{product.id}} </td>
+        <td align = 'center'> {{product.name}} </td>
+        <td align = 'center'> {{product.price}} </td>
         
-        <td align = 'center'> {{orderProduct.amount}} </td>
+        <td align = 'center'>
+            {% set amount = app.session.get('arrayOfAmounts')[loop.index0] %}
+            {{ amount }} 
+        </td>
 
         <td align = 'center'> 
-                {{orderProduct.getTotalValue}} 
-                {% set sum = sum + orderProduct.products.price * orderProduct.amount %} 
+                {% set totalValue =  product.price * amount %}
+                {{ totalValue }}
+                {% set sum = sum + totalValue  %} 
         </td>
 
     </tr>
