@@ -63,19 +63,12 @@ class OrderController extends AbstractController
 
         if ($form->isSubmitted() ) {
             
-        /*    $i = $form->getClickedButton()->getName();
-
-            if ( $form->getClickedButton()->getName() == 'reset' )  {
-                return $this->redirectToRoute('products');
-            }  */
-            
-                   
             if (empty($arrayOfProductsInCart) ) {
                     $note = 'Your cart was changed/empty or not submitted!! Please go back to the Cart.';
             }
             else {
 
-                    //saving Order to DB:
+                //saving Order to DB:
                     $date = new \DateTime();
                     $user = $this->getUser();
     
@@ -87,7 +80,7 @@ class OrderController extends AbstractController
                     $entityManager->persist($order);
                     $entityManager->flush();
 
-                    //saving OrderProducts to DB:
+                //saving OrderProducts to DB:
                     $i = 0;
                     foreach ($arrayOfProductsInCart as $product) {
                         
@@ -106,7 +99,7 @@ class OrderController extends AbstractController
                         $i++;
                     }
                 
-                    //remowing session variables:
+                //remowing session variables:
                     /**
                      * @todo remove session variables all at once (by session_unset() for example), but not logging out??:
                      */
@@ -122,6 +115,14 @@ class OrderController extends AbstractController
                             $this->session->remove($key);         
                         }
                     }
+                
+                //sending email:
+
+
+
+
+
+
                     return $this->redirectToRoute('products');
             }
         }
