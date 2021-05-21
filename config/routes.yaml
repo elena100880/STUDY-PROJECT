@@ -74,6 +74,13 @@ order_form:
             path: /order
             controller: App\Controller\OrderController::orderForm
 
+mailer:
+            path: /mailer
+            controller: App\Controller\MailerController::sendEmail
+
+
+
+
 
 login:
             path: /login

@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
 use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Constraints\DateTimeInterface;
@@ -52,10 +53,11 @@ class OrderController extends AbstractController
                                         ->add('surname', TextType::class,  ['label'=> 'Surname'])  
                                         ->add('street', TextType::class,  ['label'=> 'Street, house/apartment'])   
                                         ->add('city', TextType::class,  ['label'=> 'City'])                                                                     
-                                        ->add('post', TextType::class,  ['label'=> 'Postal code'])                                    
+                                        ->add('post', TextType::class,  ['label'=> 'Postal code'])
+                                        ->add('mail', EmailType::class,  ['label'=> 'E-mail'])                                  
                                                                                
                                         ->add('send', SubmitType::class, ['label'=>'Send ORDER'])
-                                        //->add('reset', ResetType::class, ['label'=>'RESET'])
+                                        
                                         ->getForm();
         $form->handleRequest($request); 
 
@@ -117,10 +119,13 @@ class OrderController extends AbstractController
                     }
                 
                 //sending email:
-
-
-
-
+                $data = $form->getData();
+                $name = $form->get('name')->getData(); 
+                $surname = $form->get('surname')->getData(); 
+                $street = $form->get('street')->getData(); 
+                $city = $form->get('city')->getData(); 
+                $post = $form->get('post')->getData(); 
+                $mail = $form->get('mail')->getData(); 
 
 
                     return $this->redirectToRoute('products');
