@@ -51,9 +51,11 @@
             </table>
             <br>
     
+        {% if form.send is defined %}
             <div class = 'form'>
                 {{form_row(form.send)}}
             </div>
+        {% endif %}
 
             <div class = 'form'>
                 {{form_row(form.recount)}}
@@ -68,11 +70,10 @@
 
     {% for key, value in app.session.all %}
             
-                {% if key starts with 'note' %}               
+                {% if key starts with 'validationNoteForId_' %}               
                     <span style="color:red">{{ value }}</span><br>
                 {% endif %}
-           
-       
+          
     {% endfor %}
    
     <h4>Total sum:   <span class="plus"> {{ sum }} $. </span> </h4> <br>

@@ -38,7 +38,8 @@ class ProductToCartController extends AbstractController
         }
         $totalQuantityOfItemsInCart = $this->session->get('totalQuantity');
         $this->session->set('totalQuantity', $totalQuantityOfItemsInCart + 1);
-        $this->session->remove('note'.$id);
+        
+        $this->session->remove('validationNoteForId_'.$id);
         
         $this->session->remove('sendOrderClicked');
 
@@ -67,7 +68,8 @@ class ProductToCartController extends AbstractController
         }
 
         $this->session->remove('sendOrderClicked');
-        $this->session->remove('note'.$id);
+        
+        $this->session->remove('validationNoteForId_'.$id);
 
         $referer = $request->headers->get('referer');   
         return $this->redirect($referer);

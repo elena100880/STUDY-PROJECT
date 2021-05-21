@@ -64,7 +64,7 @@ class OrderController extends AbstractController
         
         if ($form->isSubmitted() ) {
             
-            if ($form->get('reset')->isClicked() ) {
+            //if ($form->get('reset')->isClicked() ) {
                             
             if (empty($arrayOfProductsInCart) ) {
                     $note = 'Your cart was changed/empty or not submitted!! Please go back to the Cart.';
@@ -102,10 +102,9 @@ class OrderController extends AbstractController
                         $i++;
                     }
                 
+                    //remowing session variables:
                     /**
-                     * emowing session variables:
-                     * 
-                     * @todo how to remove session variables all at once (by session_unset() for example), but not logging out??:
+                     * @todo remove session variables all at once (by session_unset() for example), but not logging out??:
                      */
                     
                     $this->session->remove('arrayOfProductsInCart');
