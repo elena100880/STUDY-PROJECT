@@ -107,57 +107,63 @@ class CartViewController extends AbstractController
             $amounts = $form->get('amounts')->getData(); //array of ammounts from each product in the table
             $delete_products = $form->get('delete_products')->getData();
 
-            $send = $form->getClickedButton()->getName();
-
+            //actions after "RESET" clicked:
             if ($form->get('reset')->isClicked() ) {
                 
                 return $this->redirectToRoute('cart_view');
             }
 
-            if ( $form->getClickedButton()->getName() == 'send' ) {       // and $form->get('send')->isClicked() ) {
-             
-                foreach ($arrayOfAmounts as $amount) {
-                    
-                    if ( !is_integer($amount) )  return $this->redirectToRoute('cart_view');
-                
-                }
-                $this->session->set('sendOrderClicked', true); ///flag for not deleting data in Order-table on Order-page after making order
-                return $this->redirectToRoute('order_form');
-            }
-
+            //if "MakeOrder" or "Recount" were clicked on not refreshed old Cart-page after order was already sent - it refreshes the Cart to the empty table of products:
             else {
+                if (empty($arrayOfProductsInCart) ) {
+                    return $this->redirectToRoute('cart_view');
+                }
                 
-                $i=0;              
-                foreach ($amounts as $amount) {
-
-                    //deleting the whole product from Cart if checkbox is marked or amount-field is 0 or empty:
-                    if (isset($delete_products[$i]) or $amount == 0 or $amount == null) {
-
-                            $id_incart = $arrayOfIds[$i];
-                            $removedQuantity = $this->session->get($id_incart);
-                            $this->session->remove($id_incart);
-                            $this->session->remove('validationNoteForId_'.$arrayOfIds[$i]);
-
-                            $totalQuantityOfItemsInCart = $this->session->get('totalQuantity');
-                            $this->session->set('totalQuantity', $totalQuantityOfItemsInCart - $removedQuantity);
-                            
-                            $this->session->remove('sendOrderClicked');
-                            
+                //actions after "Make order" clicked:
+                if ( $form->getClickedButton()->getName() == 'send' ) {      
+                
+                    foreach ($arrayOfAmounts as $amount) {
+                        
+                        if ( !is_integer($amount) )  return $this->redirectToRoute('cart_view');
+                    
                     }
+                    $this->session->set('sendOrderClicked', true); ///flag for not deleting data in Order-table on Order-page after making order
+                    return $this->redirectToRoute('order_form');
+                }
 
-                    //validating and changing the amount of product and the amount of total products in Cart:
-                    /**
-                     * @todo
-                     * make validation in custom FormType or Class?? if I'll make that custom FormType in future ?? 
-                     */
-                    else {
+                //actions after "Recount cart" clicked:
+                else {
+                    
+                    $i=0;              
+                    foreach ($amounts as $amount) {
 
-                        $previousAmount = $this->session->get($arrayOfIds[$i]);
+                        //deleting the whole product from Cart if checkbox is marked or amount-field is 0 or empty:
+                        if (isset($delete_products[$i]) or $amount == 0 or $amount == null) {
 
-                        if (is_numeric($amount) and ($amount - floor( $amount) == 0 ) ) {
+                                $id_incart = $arrayOfIds[$i];
+                                $removedQuantity = $this->session->get($id_incart);
+                                $this->session->remove($id_incart);
+                                $this->session->remove('validationNoteForId_'.$arrayOfIds[$i]);
+
+                                $totalQuantityOfItemsInCart = $this->session->get('totalQuantity');
+                                $this->session->set('totalQuantity', $totalQuantityOfItemsInCart - $removedQuantity);
                                 
-                                if ($previousAmount != $amount) {
+                                $this->session->remove('sendOrderClicked');
+                                
+                        }
+
+                        //validating and changing the amount of product and the amount of total products in Cart:
+                        /**
+                         * @todo
+                         * make validation in custom FormType or Class?? if I'll make that custom FormType in future ?? 
+                         */
+                        else {
+
+                            $previousAmount = $this->session->get($arrayOfIds[$i]);
+                            if (is_numeric($amount) and ($amount - floor( $amount) == 0 ) ) {
                                     
+                                if ($previousAmount != $amount) {
+                                        
                                     $this->session->remove('sendOrderClicked');
 
                                     $totalQuantityOfItemsInCart = $this->session->get('totalQuantity');
@@ -167,30 +173,28 @@ class CartViewController extends AbstractController
                                     else {
                                         $this->session->set('totalQuantity', $totalQuantityOfItemsInCart + $amount );
                                     }
-                                    
+                                        
                                     $this->session->set($arrayOfIds[$i], intval($amount) );
-
                                 }
                                 $this->session->remove('validationNoteForId_'.$arrayOfIds[$i]);
-                                                        
-                        }
-                        else {
+                            }
+                            else {
                                 $note = "Please enter the whole number for ID $arrayOfIds[$i] instead of '$amount' !!";
                                 $this->session->set('validationNoteForId_'.$arrayOfIds[$i], $note);
-                                
+                                    
                                 $totalQuantityOfItemsInCart = $this->session->get('totalQuantity');
                                 if (is_integer($previousAmount) ) {
-                                    $this->session->set('totalQuantity', $totalQuantityOfItemsInCart - $previousAmount);
+                                        $this->session->set('totalQuantity', $totalQuantityOfItemsInCart - $previousAmount);
                                 }
-                                
+                                    
                                 $this->session->set($arrayOfIds[$i], $amount);
-
                                 $this->session->remove('sendOrderClicked');
+                            }
                         }
+                        $i++;
                     }
-                    $i++;
+                    return $this->redirectToRoute('cart_view');
                 }
-                return $this->redirectToRoute('cart_view');
             }
         }
         
@@ -203,6 +207,4 @@ class CartViewController extends AbstractController
         return new Response($contents);
         
     }
-
-    
 }

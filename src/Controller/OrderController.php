@@ -48,24 +48,28 @@ class OrderController extends AbstractController
         }
 
         $form = $this->createFormBuilder()
-                                        ->add('name', TextType::class,  [
-                                                                            'label'=> 'Name',
-                                                                          
-                                                                        ])
+                                        ->add('name', TextType::class,  ['label'=> 'Name'])
                                         ->add('surname', TextType::class,  ['label'=> 'Surname'])  
                                         ->add('street', TextType::class,  ['label'=> 'Street, house/apartment'])   
                                         ->add('city', TextType::class,  ['label'=> 'City'])                                                                     
                                         ->add('post', TextType::class,  ['label'=> 'Postal code'])                                    
                                                                                
                                         ->add('send', SubmitType::class, ['label'=>'Send ORDER'])
-                                        ->add('reset', ResetType::class, ['label'=>'RESET'])
+                                        //->add('reset', ResetType::class, ['label'=>'RESET'])
                                         ->getForm();
-        $form->handleRequest($request);  
+        $form->handleRequest($request); 
+
         
+
         if ($form->isSubmitted() ) {
             
-            //if ($form->get('reset')->isClicked() ) {
-                            
+        /*    $i = $form->getClickedButton()->getName();
+
+            if ( $form->getClickedButton()->getName() == 'reset' )  {
+                return $this->redirectToRoute('products');
+            }  */
+            
+                   
             if (empty($arrayOfProductsInCart) ) {
                     $note = 'Your cart was changed/empty or not submitted!! Please go back to the Cart.';
             }
