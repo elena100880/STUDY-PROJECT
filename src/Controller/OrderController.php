@@ -128,7 +128,7 @@ class OrderController extends AbstractController
                 $mail = $form->get('mail')->getData(); 
 
 
-                    return $this->redirectToRoute('products');
+                return $this->redirectToRoute('products');
             }
         }
        
