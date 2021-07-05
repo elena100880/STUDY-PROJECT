@@ -63,5 +63,11 @@ For easier using Database `<project-folder>/my_sql/sql_data/study_sql`  is added
 
 ***
 **Credentials**: 
+
+internet-shop:
 + login - 100880@gmail.com 
++ password - 1008
+
+phpmyadmin:
++ login - root 
 + password - 1008
