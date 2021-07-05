@@ -1,0 +1,36 @@
+version: '3.3'
+
+services:
+
+  db:
+    image: mysql
+    container_name: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - ./my_sql/sql_data/:/var/lib/mysql/
+      - ./my_sql/sql_conf/:/etc/mysql/conf.d/
+      - ./my_sql/sql_log/:/var/log/mysql/ 
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 1008
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: pma
+    restart: always
+    ports:
+      - 8080:80
+    
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile_simple
+    image: php:8.0-apache-pdomysql
+    container_name: app
+    ports:
+      - 80:80
+    volumes:
+      - ./:/var/www/
+    tty: true
+    stdin_open: true   
+    

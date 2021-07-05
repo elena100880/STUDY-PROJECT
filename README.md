@@ -6,51 +6,57 @@
 Execute commands:
 + `git clone https://github.com/elena100880/STUDY-PROJECT`
 
-in project folder:
-+ `compose install`
-+ `docker-compose up`
+in project folder (composer and docker-compose should be installed):
++ `composer install`
++ `docker-compose -f docker-compose_simple.yaml up` - it will build the image for php:8.0-apache and launch the project
 
-Then open localhost/index.php/<route_path> in your browser.
+Then open localhost/<route_path> in your browser.
 
 
 ***
 **Dockerfile**
 
-Docker-compose.yaml file in the project folder uses an official image php:7.4-apache.
+Docker-compose_simple.yaml uses a simple Dockerfile_simple, which uses official image php:8.0-apache, adds to this image pdo_mysql and enables mod rewrite (so you can skip index.php in URLs).
 
-Also, you can use my Dockerfile from rep: https://github.com/elena100880/dockerfile.
+Also, you can use more complicated Dockerfile_mine.  It includes php:8.0-apache official image (or you can change it to php:7.4-apache) and the installation of Composer, XDebug for VSC, Nano, some PHP extensions.
 
-It includes php:8.0-apache official image (or you can change it to php:7.4-apache) and the installation of Composer, XDebug for VSC, Nano, some PHP extensions and enabling using mod rewrite (so you can skip index.php in URLs).
+Take notice that building image from Dockerfile_mine will take more time. 
 
-Execute the following commands:
+In order to do so execute the following commands:
++ `git clone https://github.com/elena100880/STUDY-PROJECT` - if not executed yet
 
-  + `docker build . -t php:8.0-apache-xdebug` in the folder with Dockerfile.
-  + `docker run -p -d 80:80 -v "$PWD":/var/www -w="/var/www" php:8.0-apache-xdebug composer install` in the project folder.
-  + `docker run -d -p 80:80 -v "$PWD":/var/www --name oo php:8.0-apache-xdebug` in the project folder to launch the project.
+in project folder:
++ `composer install`  - if not executed yet
++ `docker rm $(docker ps -a -q)` - to remove already used containers
++ `sudo chmod 777 my_sql/ -R ` - if project was initialyy launched with another Dockerfie 
+
++ `docker-compose -f docker-compose_mine.yaml up`
+
+Then open localhost/<route_path> in your browser.
 
 ***
 **DataBase**
 
-For easier using  **/var/data.db** file is added to the repository.
+For easier using Database `<project-folder>/my_sql/sql_data/study_sql`  is added to the repository.
 
 ***
 **Pages:**
 
-+ **localhost/index.php/products** - list and filter for **products** in the shop with links to pages:
-  * view a particular product - **localhost/index.php/product/{id}**;
-  * add a product - **localhost/index.php/product/add**;
-  * editing and deleting a particular product and **adding a product to cart** - **localhost/index.php/product/edit/{id}**;
++ **localhost/products** - list and filter for **products** in the shop with links to pages:
+  * view a particular product - **localhost/product/{id}**;
+  * add a product - **localhost/product/add**;
+  * editing and deleting a particular product and **adding a product to cart** - **localhost/product/edit/{id}**;
   
-+ **localhost/index.php/categories**  - list of **categories** of the products with links to:
-  * editing a particular category- **localhost/index.php/category/edit/{id}** with links to:
-    * adding a category - **/localhost/index.php/category/add** ;
++ **localhost/categories**  - list of **categories** of the products with links to:
+  * editing a particular category- **localhost/category/edit/{id}** with links to:
+    * adding a category - **/localhost/category/add** ;
   
-+ **localhost/index.php/category/tree/{id}** - tree of categories (parent-child tree), recursion used;
++ **localhost/category/tree/{id}** - tree of categories (parent-child tree), recursion used;
   
 + **logging in** is customised to stay in the previous page;
 
-+ **localhost/index.php/cart** - editing the cart with added products and link to: 
-  * completing and sending the order - **/localhost/index.php/order**
++ **localhost/cart** - editing the cart with added products and link to: 
+  * completing and sending the order - **/localhost/order**
 
 
 
